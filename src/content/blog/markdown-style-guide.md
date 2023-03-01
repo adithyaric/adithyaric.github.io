@@ -11,6 +11,19 @@ Here is a sample of some basic Markdown syntax that can be used when writing Mar
 
 The following HTML `<h1>`—`<h6>` elements represent six levels of section headings. `<h1>` is the highest section level while `<h6>` is the lowest.
 
+***code:***
+
+```md
+#H1
+##H2
+###H3
+####H4
+#####H5
+######H6
+```
+
+***result:***
+
 # H1
 
 ## H2
@@ -25,22 +38,35 @@ The following HTML `<h1>`—`<h6>` elements represent six levels of section head
 
 ## Paragraph
 
-Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem. Nam, omnis sum am facea corem alique molestrunt et eos evelece arcillit ut aut eos eos nus, sin conecerem erum fuga. Ri oditatquam, ad quibus unda veliamenimin cusam et facea ipsamus es exerum sitate dolores editium rerore eost, temped molorro ratiae volorro te reribus dolorer sperchicium faceata tiustia prat.
+Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem.
 
 Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sapicia is sinveli squiatum, core et que aut hariosam ex eat.
 
 ## Images
 
+```md
+![This is a placeholder image description](/placeholder-social.jpg)
+```
+
 ![This is a placeholder image description](/placeholder-social.jpg)
 
 ## Blockquotes
+
+```md
+`footer` or `cite`
+```
 
 The blockquote element represents content that is quoted from another source, optionally with a citation which must be within a `footer` or `cite` element, and optionally with in-line changes such as annotations and abbreviations.
 
 #### Blockquote without attribution
 
-> Tiam, ad mint andaepu dandae nostion secatur sequo quae.  
-> **Note** that you can use _Markdown syntax_ within a blockquote.
+```md
+> Tiam, ad mint andaepu dandae nostion secatur sequo quae.
+> **Note** that you can use *Markdown syntax* within a blockquote.
+```
+
+> Tiam, ad mint andaepu dandae nostion secatur sequo quae.
+> **Note** that you can use *Markdown syntax* within a blockquote.
 
 #### Blockquote with attribution
 
@@ -53,7 +79,7 @@ The blockquote element represents content that is quoted from another source, op
 
 | Italics   | Bold     | Code   |
 | --------- | -------- | ------ |
-| _italics_ | **bold** | `code` |
+| *italics* | **bold** | `code` |
 
 ## Code Blocks
 
