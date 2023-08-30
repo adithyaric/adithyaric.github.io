@@ -1,8 +1,10 @@
 ---
-title: "Connecting to the VPS"
-description: "Steps to deploy a Node.js app to DigitalOcean using PM2, NGINX as a reverse proxy and an SSL from LetsEncrypt"
-pubDate: "Mar 07 2023"
-heroImage: "/cloud.png"
+title: Connecting to the VPS
+description: Steps to deploy a Node.js app to DigitalOcean using PM2, NGINX as a reverse
+  proxy and an SSL from LetsEncrypt
+pubDate: Mar 07 2023
+heroImage: /cloud.png
+slug: connecting-vps
 ---
 
 To connect your VPS server, you can use your server IP, you can create a root password and enter the server with your IP address and password credentials. But the more secure way is using an SSH key.
@@ -17,7 +19,8 @@ To connect your VPS server, you can use your server IP, you can create a root pa
 4. Type a passphrase (characters will not appear in the terminal).
 5. Confirm your passphrase to finish SSH Keygen. You should get an output that looks something like this:
 
-``` Your identification has been saved in /Users/lamadev/.ssh/id_rsa.
+```sh
+Your identification has been saved in /Users/lamadev/.ssh/id_rsa.
 Your public key has been saved in /Users/lamadev/.ssh/id_rsa.pub.
 The key fingerprint is:
 ae:89:72:0b:85:da:5a:f4:7c:1f:c2:43:fd:c6:44:30 lamadev@mac.local

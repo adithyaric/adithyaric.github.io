@@ -1,8 +1,11 @@
 ---
-title: "Markdown Style Guide"
-description: "Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro."
-pubDate: "Jul 01 2022"
-heroImage: "/placeholder-hero.jpg"
+title: Markdown Style Guide
+description: Here is a sample of some basic Markdown syntax that can be used when writing
+  Markdown content in Astro.
+pubDate: Jul 01 2022
+heroImage: /placeholder-hero.jpg
+slug: markdown-style-guide
+lastmod: 2023-03-08T03:28:01.457Z
 ---
 
 Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.
@@ -58,7 +61,7 @@ Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sap
 
 The blockquote element represents content that is quoted from another source, optionally with a citation which must be within a `footer` or `cite` element, and optionally with in-line changes such as annotations and abbreviations.
 
-#### Blockquote without attribution
+### Blockquote without attribution
 
 ```md
 > Tiam, ad mint andaepu dandae nostion secatur sequo quae.
@@ -98,13 +101,13 @@ The blockquote element represents content that is quoted from another source, op
 
 ## List Types
 
-#### Ordered List
+### Ordered List
 
 1. First item
 2. Second item
 3. Third item
 
-#### Unordered List
+### Unordered List
 
 - List item
 - Another item
