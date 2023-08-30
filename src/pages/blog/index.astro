@@ -1,54 +1,48 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
-import { getCollection } from 'astro:content';
-import FormattedDate from '../../components/FormattedDate.astro';
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import { getCollection } from "astro:content";
+import FormattedDate from "../../components/FormattedDate.astro";
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+const posts = (await getCollection("blog")).sort(
+  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
 );
 ---
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			ul {
-				list-style-type: none;
-				padding: unset;
-			}
-			ul li {
-				display: flex;
-			}
-			ul li :global(time) {
-				flex: 0 0 130px;
-				font-style: italic;
-				color: #595959;
-			}
-			ul li a:visited {
-				color: #8e32dc;
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<FormattedDate date={post.data.pubDate} />
-								<a href={`/blog/${post.slug}/`}>{post.data.title}</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body
+    class="font-sans mx-auto p-5 max-w-5xl text-left bg-white break-words overflow-auto leading-6 text-gray-700"
+  >
+    <Header />
+    <main>
+      <section>
+        <ul class="list-none p-1">
+          {
+            posts.map((post) => (
+              <li class="flex items-center mb-2">
+                <FormattedDate
+                  date={post.data.pubDate}
+                  class="flex-none w-32 italic text-gray-600 mr-3"
+                />
+                -
+                <a
+                  class="visited:text-purple-600 hover:text-gray-900 font-medium"
+                  href={`/blog/${post.slug}/`}
+                >
+                  {post.data.title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </main>
+    <Footer />
+  </body>
 </html>

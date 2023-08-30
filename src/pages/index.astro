@@ -1,55 +1,51 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 ---
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header title={SITE_TITLE} />
-		<main>
-			<h1>Hello, Guys! 👋</h1>
-			<p>My Name is Muhammad <b>Adithya</b></p>
-			<p>I'm a computer science student, full-stack web (focusing on Back-end) & mobile apps developer.</p>
-			<p>
-				<i>One year plus of experience in Backend</i> using Laravel and MySql
-			</p>
-			<p>some things I'm learning right now : </p>
-			<p>
-				<code>
-				"Web Development",
-				"level": "Intermediate",
-				"stack": ["HTML", "CSS", "JavaScript", "PHP"],
-				</code>
-				<hr>
-				<code>
-					["Bootsrtap", "JQuery", "ReactJs"],
-					"Framework": [
-						"Codeigniter 3",
-						"Laravel",
-						"NextJs",
-					]
-				</code>
-				<hr>
-				<code>
-					"Name": "Mobile Development",
-					"level": "Beginner",
-					"stack": ["Flutter", "React Native"]
-				</code>
-				<hr>
-				<code>
-					"Tools": [
-						"Database": "MySQL",
-						"Design": ["Draw.io","Figma"],
-					]
-				</code>
-			</p>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body
+    class="font-sans mx-auto p-5 max-w-5xl text-left bg-white break-words overflow-auto leading-6 text-gray-700"
+  >
+    <Header title={SITE_TITLE} />
+    <main>
+      <h1 class="text-3xl font-bold underline">Hello, Guys! 👋</h1>
+      <p>My Name is Muhammad <b>Adithya</b></p>
+      <p>
+        I'm a computer science student, full-stack web (focusing on Back-end) &
+        mobile apps developer.
+      </p>
+      <p>
+        <i>One year plus of experience in Backend</i> using Laravel and MySql
+      </p>
+      <p>some things I'm learning right now :</p>
+      <p>
+        <code class="px-1.5 py-0.5">
+          "Web Development", "level": "Intermediate", "stack": ["HTML", "CSS",
+          "JavaScript", "PHP"],
+        </code>
+        <hr />
+        <code class="px-1.5 py-0.5">
+          ["Bootsrtap", "JQuery", "ReactJs"], "Framework": [ "Codeigniter 3",
+          "Laravel", "NextJs", ]
+        </code>
+        <hr />
+        <code class="px-1.5 py-0.5">
+          "Name": "Mobile Development", "level": "Beginner", "stack":
+          ["Flutter", "React Native"]
+        </code>
+        <hr />
+        <code class="px-1.5 py-0.5">
+          "Tools": [ "Database": "MySQL", "Design": ["Draw.io","Figma"], ]
+        </code>
+      </p>
+    </main>
+    <Footer />
+  </body>
 </html>
