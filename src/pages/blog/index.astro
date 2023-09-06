@@ -11,30 +11,21 @@ const posts = (await getCollection("blog")).sort(
 );
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
-  <body
-    class="font-sans mx-auto p-5 max-w-5xl text-left bg-white break-words overflow-auto leading-6 text-gray-700"
-  >
+  <body class="">
     <Header />
     <main>
       <section>
-        <ul class="list-none p-1">
+        <ul class="">
           {
             posts.map((post) => (
-              <li class="flex items-center mb-2">
-                <FormattedDate
-                  date={post.data.pubDate}
-                  class="flex-none w-32 italic text-gray-600 mr-3"
-                />
-                -
-                <a
-                  class="visited:text-purple-600 hover:text-gray-900 font-medium"
-                  href={`/blog/${post.slug}/`}
-                >
+              <li class="">
+                <FormattedDate date={post.data.pubDate} class="" />-
+                <a class="" href={`/blog/${post.slug}/`}>
                   {post.data.title}
                 </a>
               </li>
