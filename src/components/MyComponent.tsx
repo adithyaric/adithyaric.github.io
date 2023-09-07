@@ -14,29 +14,33 @@ interface Note {
 }
 
 function MyComponent() {
-  function useLocalStorage(key, initialValue) {
-    const [value, setValue] = useState(() => {
-      const savedValue = localStorage.getItem(key);
-      if (savedValue) {
-        return JSON.parse(savedValue);
-      }
-      return initialValue;
-    });
-
-    useEffect(() => {
-      localStorage.setItem(key, JSON.stringify(value));
-    }, [key, value]);
-
-    return [value, setValue];
-  }
-
-  const [notes, setNotes] = useLocalStorage("notes", []);
+  const [notes, setNotes] = useState<Note[]>([]);
   const [productName, setProductName] = useState("");
   const [quantity, setQuantity] = useState("1");
   const [price, setPrice] = useState("1");
   const [subtotal, setSubtotal] = useState(0);
-  const [total, setTotal] = useLocalStorage("total", 0);
+  const [total, setTotal] = useState<number>(0);
   const [selected, setSelected] = useState<number[]>([]);
+
+  useEffect(() => {
+    const savedNotes = localStorage.getItem("notes");
+    if (savedNotes) {
+      setNotes(JSON.parse(savedNotes));
+    }
+
+    const savedTotal = localStorage.getItem("total");
+    if (savedTotal) {
+      setTotal(parseFloat(savedTotal));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
+
+  useEffect(() => {
+    localStorage.setItem("total", total.toString());
+  }, [total]);
 
   const handleAddNote = () => {
     if (!productName) {
