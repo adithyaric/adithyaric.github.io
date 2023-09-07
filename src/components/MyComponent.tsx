@@ -1,4 +1,10 @@
 import React, { useState } from "react";
+import {
+  TrashIcon,
+  PlusCircleIcon,
+  MinusCircleIcon,
+  PencilSquareIcon,
+} from "@heroicons/react/24/solid";
 
 interface Note {
   productName: string;
@@ -73,80 +79,84 @@ function MyComponent() {
   };
 
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content flex-col lg:flex-row">
-        <div className="card card-compact w-96 bg-base-100 shadow-xl">
-          <div className="card-body">
-            <div className="text-lg font-bold">Product Name:</div>
-            <input
-              className="input input-bordered"
-              value={productName}
-              onChange={(e) => setProductName(e.target.value)}
-            />
-            <div className="text-lg font-bold">Quantity:</div>
-            <input
-              className="input input-bordered"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-              type="number"
-            />
-            <div className="text-lg font-bold">Price:</div>
-            <input
-              className="input input-bordered"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              type="number"
-            />
-            <div className="card-actions justify-end" onClick={handleAddNote}>
-              <button className="btn btn-primary">Save</button>
-            </div>
-          </div>
-        </div>
-
-        <div className="h-96 overflow-y-auto">
-          {notes.map((item, index) => (
-            <div
-              key={`${item.productName}-${index}`}
-              className="card w-96 bg-base-100 shadow-xl mb-5"
-            >
-              <div className="card-body">
-                <h2 className="card-title">{item.productName}</h2>
-                <p>
-                  <button
-                    onClick={() => handleDeleteNote(index)}
-                    className="badge badge-outline badge-lg"
-                  >
-                    x Rp.{item.subtotal.toLocaleString()}
-                  </button>
-                </p>
-                <div className="card-actions justify-end">
-                  <button
-                    onClick={() => handleEditNote(index)}
-                    className="badge badge-outline"
-                  >
-                    i
-                  </button>
-                  <button
-                    onClick={() => handleDecreaseQuantity(index)}
-                    className="badge badge-outline"
-                  >
-                    -
-                  </button>
-                  <div>{item.quantity}</div>
-                  <button
-                    onClick={() => handleIncreaseQuantity(index)}
-                    className="badge badge-outline"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        <p className="text-lg font-bold">Total: Rp.{total.toLocaleString()}</p>
+    <>
+      <div className="form-control">
+        <label className="label">
+          <span className="label-text">Product Name</span>
+        </label>
+        <input
+          value={productName}
+          onChange={(e) => setProductName(e.target.value)}
+          className="input input-bordered"
+        />
       </div>
-    </div>
+      <div className="form-control">
+        <label className="label">
+          <span className="label-text">Quantity</span>
+        </label>
+        <input
+          value={quantity}
+          onChange={(e) => setQuantity(e.target.value)}
+          type="number"
+          className="input input-bordered"
+        />
+      </div>
+      <div className="form-control">
+        <label className="label">
+          <span className="label-text">Price</span>
+        </label>
+        <input
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          type="number"
+          className="input input-bordered"
+        />
+      </div>
+      <button className="btn btn-primary" onClick={handleAddNote}>
+        Save
+      </button>
+
+      <div className="overflow-x-auto">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Price</th>
+              <th>Subtotal</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {notes.map((item, index) => (
+              <tr key={`${item.productName}-${index}`}>
+                <td>{item.productName}</td>
+                <td>Rp.{item.price.toLocaleString()}</td>
+                <td>Rp.{item.subtotal.toLocaleString()}</td>
+                <td className="px-2 whitespace-nowrap">
+                  <button onClick={() => handleEditNote(index)}>
+                    <PencilSquareIcon className="h-6 w-6 text-gray-200" />
+                  </button>
+                  <button onClick={() => handleDecreaseQuantity(index)}>
+                    <MinusCircleIcon className="h-6 w-6 text-gray-300" />
+                  </button>
+                  <span className="text-gray-500">{item.quantity}</span>
+                  <button onClick={() => handleIncreaseQuantity(index)}>
+                    <PlusCircleIcon className="h-6 w-6 text-gray-300" />
+                  </button>
+                  <button onClick={() => handleDeleteNote(index)}>
+                    <TrashIcon className="h-6 w-6 text-gray-500" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+            <tr>
+              <td colSpan={2}>Total</td>
+              <td>Rp.{total.toLocaleString()}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }
 

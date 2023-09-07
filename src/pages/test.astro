@@ -1,7 +1,19 @@
 ---
-import Footer from "../components/Footer.astro";
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
 import MyComponent from "../components/MyComponent";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 ---
 
-<MyComponent client:load />
-<Footer />
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+
+  <body>
+    <Header title={SITE_TITLE} />
+    <main>
+      <MyComponent client:load />
+    </main>
+  </body>
+</html>
