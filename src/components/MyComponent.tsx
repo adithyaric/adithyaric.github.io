@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   TrashIcon,
   PlusCircleIcon,
@@ -19,8 +19,28 @@ function MyComponent() {
   const [quantity, setQuantity] = useState("1");
   const [price, setPrice] = useState("1");
   const [subtotal, setSubtotal] = useState(0);
-  const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState<number>(0);
   const [selected, setSelected] = useState<number[]>([]);
+
+  useEffect(() => {
+    const savedNotes = localStorage.getItem("notes");
+    if (savedNotes) {
+      setNotes(JSON.parse(savedNotes));
+    }
+
+    const savedTotal = localStorage.getItem("total");
+    if (savedTotal) {
+      setTotal(parseFloat(savedTotal));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
+
+  useEffect(() => {
+    localStorage.setItem("total", total.toString());
+  }, [total]);
 
   const handleAddNote = () => {
     // TODO : add Validations & Error handling
@@ -102,6 +122,7 @@ function MyComponent() {
       setSelected(selected.filter((i) => i !== index));
     }
   };
+
   const handleDeleteSelected = () => {
     if (
       window.confirm("Are you sure you want to delete the selected products?")
@@ -117,7 +138,7 @@ function MyComponent() {
   };
 
   return (
-    <div className="h-screen pt-10">
+    <div className="h-screen">
       <div className="mx-auto max-w-6xl justify-center px-2 md:flex md:space-x-6 xl:px-0">
         <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
           <div className="form-control">
@@ -162,7 +183,7 @@ function MyComponent() {
             Save
           </button>
         </div>
-        <div className="rounded-lg md:w-2/3">
+        <div className="pt-10 rounded-lg md:w-2/3">
           <div className="overflow-x-auto justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
             <table className="table table-sm">
               <thead>
@@ -218,7 +239,7 @@ function MyComponent() {
                   </tr>
                 ))}
                 <tr>
-                  <td colSpan={2}>Total</td>
+                  <td colSpan={3}>Total</td>
                   <td>Rp.{total.toLocaleString()}</td>
                 </tr>
                 {selected.length > 0 && (
