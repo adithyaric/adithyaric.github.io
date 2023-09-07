@@ -14,38 +14,45 @@ interface Note {
 }
 
 function MyComponent() {
-  const [notes, setNotes] = useState<Note[]>([]);
+  function useLocalStorage(key, initialValue) {
+    const [value, setValue] = useState(() => {
+      const savedValue = localStorage.getItem(key);
+      if (savedValue) {
+        return JSON.parse(savedValue);
+      }
+      return initialValue;
+    });
+
+    useEffect(() => {
+      localStorage.setItem(key, JSON.stringify(value));
+    }, [key, value]);
+
+    return [value, setValue];
+  }
+
+  const [notes, setNotes] = useLocalStorage("notes", []);
   const [productName, setProductName] = useState("");
   const [quantity, setQuantity] = useState("1");
   const [price, setPrice] = useState("1");
   const [subtotal, setSubtotal] = useState(0);
-  const [total, setTotal] = useState<number>(0);
+  const [total, setTotal] = useLocalStorage("total", 0);
   const [selected, setSelected] = useState<number[]>([]);
 
-  useEffect(() => {
-    const savedNotes = localStorage.getItem("notes");
-    if (savedNotes) {
-      setNotes(JSON.parse(savedNotes));
-    }
-
-    const savedTotal = localStorage.getItem("total");
-    if (savedTotal) {
-      setTotal(parseFloat(savedTotal));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(notes));
-  }, [notes]);
-
-  useEffect(() => {
-    localStorage.setItem("total", total.toString());
-  }, [total]);
-
   const handleAddNote = () => {
-    // TODO : add Validations & Error handling
+    if (!productName) {
+      alert("Product name cannot be empty");
+      return;
+    }
     const qty = parseFloat(quantity);
+    if (isNaN(qty) || qty <= 0) {
+      alert("Quantity must be a positive number");
+      return;
+    }
     const itemPrice = parseFloat(price);
+    if (isNaN(itemPrice) || itemPrice <= 0) {
+      alert("Price must be a positive number");
+      return;
+    }
     const itemSubtotal = qty * itemPrice;
     const newTotal = total + itemSubtotal;
     const newNote: Note = {
