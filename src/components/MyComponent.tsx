@@ -11,11 +11,13 @@ interface Note {
   quantity: number;
   price: number;
   subtotal: number;
+  isBought: boolean;
 }
 
 function MyComponent() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [productName, setProductName] = useState("");
+  const [isBought, setisBought] = useState(false);
   const [quantity, setQuantity] = useState("1");
   const [price, setPrice] = useState("1");
   const [subtotal, setSubtotal] = useState(0);
@@ -64,6 +66,7 @@ function MyComponent() {
       quantity: qty,
       price: itemPrice,
       subtotal: itemSubtotal,
+      isBought,
     };
     setNotes([...notes, newNote]);
     setProductName("");
@@ -148,6 +151,12 @@ function MyComponent() {
     }
   };
 
+  const handleMarkAsBought = (index: number) => {
+    const newNotes = [...notes];
+    newNotes[index].isBought = true;
+    setNotes(newNotes);
+  };
+
   return (
     <div className="h-screen">
       <div className="mx-auto max-w-6xl justify-center px-2 md:flex md:space-x-6 xl:px-0">
@@ -217,7 +226,12 @@ function MyComponent() {
               </thead>
               <tbody>
                 {notes.map((item, index) => (
-                  <tr key={`${item.productName}-${index}`}>
+                  <tr
+                    key={`${item.productName}-${index}`}
+                    className={
+                      item.isBought ? "line-through text-gray-500" : ""
+                    }
+                  >
                     <th>
                       <label>
                         <input
@@ -243,6 +257,9 @@ function MyComponent() {
                           <span className="text-gray-500">{item.quantity}</span>
                           <button onClick={() => handleIncreaseQuantity(index)}>
                             <PlusCircleIcon className="h-6 w-6 text-gray-400" />
+                          </button>
+                          <button onClick={() => handleMarkAsBought(index)}>
+                            Mark as bought
                           </button>
                         </div>
                       </div>
