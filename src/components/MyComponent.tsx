@@ -17,7 +17,7 @@ interface Note {
 function MyComponent() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [productName, setProductName] = useState("");
-  const [isBought, setisBought] = useState(false);
+  const [isBought, setIsBought] = useState(false);
   const [quantity, setQuantity] = useState("1");
   const [price, setPrice] = useState("1");
   const [subtotal, setSubtotal] = useState(0);
@@ -151,11 +151,23 @@ function MyComponent() {
     }
   };
 
-  const handleMarkAsBought = (index: number) => {
+  const handleIsBoughtSelected = () => {
     const newNotes = [...notes];
-    newNotes[index].isBought = true;
+    selected.forEach((index) => {
+      newNotes[index].isBought = !newNotes[index].isBought;
+    });
     setNotes(newNotes);
+    setSelected([]);
   };
+
+  const totalUnbought = notes.reduce(
+    (acc, note) => (note.isBought ? acc : acc + note.subtotal),
+    0
+  );
+  const totalBought = notes.reduce(
+    (acc, note) => (note.isBought ? acc + note.subtotal : acc),
+    0
+  );
 
   return (
     <div className="h-screen">
@@ -248,37 +260,54 @@ function MyComponent() {
                     <td className="px-2 whitespace-nowrap">
                       <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
                         <div className="flex items-center border-gray-100">
-                          <button onClick={() => handleEditNote(index)}>
-                            <PencilSquareIcon className="h-6 w-6 text-gray-200" />
-                          </button>
-                          <button onClick={() => handleDecreaseQuantity(index)}>
-                            <MinusCircleIcon className="h-6 w-6 text-gray-400" />
-                          </button>
+                          {!item.isBought && (
+                            <>
+                              <button onClick={() => handleEditNote(index)}>
+                                <PencilSquareIcon className="h-6 w-6 text-gray-200" />
+                              </button>
+                              <button
+                                onClick={() => handleDecreaseQuantity(index)}
+                              >
+                                <MinusCircleIcon className="h-6 w-6 text-gray-400" />
+                              </button>
+                            </>
+                          )}
                           <span className="text-gray-500">{item.quantity}</span>
-                          <button onClick={() => handleIncreaseQuantity(index)}>
-                            <PlusCircleIcon className="h-6 w-6 text-gray-400" />
-                          </button>
-                          <button onClick={() => handleMarkAsBought(index)}>
-                            Mark as bought
-                          </button>
+                          {!item.isBought && (
+                            <button
+                              onClick={() => handleIncreaseQuantity(index)}
+                            >
+                              <PlusCircleIcon className="h-6 w-6 text-gray-400" />
+                            </button>
+                          )}
                         </div>
                       </div>
                     </td>
                   </tr>
                 ))}
                 <tr>
-                  <td colSpan={3}>Total</td>
-                  <td>Rp.{total.toLocaleString()}</td>
+                  <td colSpan={3}>Total (Unbought Items)</td>
+                  <td>Rp.{totalUnbought.toLocaleString()}</td>
+                </tr>
+                <tr>
+                  <td colSpan={3}>Total (Bought Items)</td>
+                  <td>Rp.{totalBought.toLocaleString()}</td>
                 </tr>
                 {selected.length > 0 && (
                   <tr>
-                    <td colSpan={5}>
+                    <td colSpan={5} className="gap-2 flex">
                       <button
                         className="btn btn-outline btn-error"
                         onClick={handleDeleteSelected}
                       >
                         {selected.length}
                         <TrashIcon className="h-6 w-6" />
+                      </button>
+                      <button
+                        className="btn btn-outline"
+                        onClick={handleIsBoughtSelected}
+                      >
+                        Mark {selected.length} items as bought
                       </button>
                     </td>
                   </tr>
