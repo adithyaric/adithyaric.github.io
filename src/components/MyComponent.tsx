@@ -15,6 +15,7 @@ interface Note {
 }
 
 function MyComponent() {
+  const [instance, setInstance] = useState<Note[][]>([]);
   const [notes, setNotes] = useState<Note[]>([]);
   const [productName, setProductName] = useState("");
   const [isBought, setIsBought] = useState(false);
@@ -23,6 +24,17 @@ function MyComponent() {
   const [subtotal, setSubtotal] = useState(0);
   const [total, setTotal] = useState<number>(0);
   const [selected, setSelected] = useState<number[]>([]);
+
+  useEffect(() => {
+    const savedInstances = localStorage.getItem("instances");
+    if (savedInstances) {
+      setInstance(JSON.parse(savedInstances));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("instances", JSON.stringify(instance));
+  }, [instance]);
 
   useEffect(() => {
     const savedNotes = localStorage.getItem("notes");
@@ -43,6 +55,24 @@ function MyComponent() {
   useEffect(() => {
     localStorage.setItem("total", total.toString());
   }, [total]);
+
+  const saveNotesToInstance = () => {
+    setInstance((prevInstance) => [...prevInstance, notes]);
+    setNotes([]); // Clear notes
+  };
+
+  // Move instance back to active notes
+  const moveInstanceToActiveNotes = (index: number) => {
+    const selectedInstance = instance[index];
+    setNotes((prevNotes) => [...prevNotes, ...selectedInstance]);
+
+    // Remove the instance from instances
+    setInstance((prevInstance) => {
+      const newInstances = [...prevInstance];
+      newInstances.splice(index, 1);
+      return newInstances;
+    });
+  };
 
   const handleAddNote = () => {
     if (!productName) {
@@ -311,6 +341,54 @@ function MyComponent() {
                       </button>
                     </td>
                   </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+          <button
+            className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600"
+            onClick={saveNotesToInstance}
+          >
+            Save To Instance
+          </button>
+        </div>
+        <div className="pt-10 rounded-lg md:w-2/3">
+          <div className="overflow-x-auto justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
+            <table className="table table-sm">
+              <thead>
+                <tr>
+                  <th>Instance</th>
+                  <th>Product Name</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Subtotal</th>
+                  <th>isBought</th>
+                </tr>
+              </thead>
+              <tbody>
+                {instance.map((inst, index) =>
+                  inst.map((item, noteIndex) => (
+                    <tr
+                      key={`${item.productName}-${noteIndex}`}
+                      className={item.isBought ? "text-gray-500" : ""}
+                    >
+                      {noteIndex === 0 && (
+                        <td rowSpan={inst.length}>
+                          Instance {index + 1}{" "}
+                          <button
+                            onClick={() => moveInstanceToActiveNotes(index)}
+                          >
+                            <PlusCircleIcon className="h-6 w-6 text-gray-400" />
+                          </button>
+                        </td>
+                      )}
+                      <td>{item.productName}</td>
+                      <td>{item.quantity}</td>
+                      <td>Rp.{item.price.toLocaleString()}</td>
+                      <td>Rp.{item.subtotal.toLocaleString()}</td>
+                      <td>{item.isBought ? "Yes" : "No"}</td>
+                    </tr>
+                  ))
                 )}
               </tbody>
             </table>
