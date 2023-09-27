@@ -199,6 +199,10 @@ function MyComponent() {
     0
   );
 
+  const instanceTotals = instance.map((inst) =>
+    inst.reduce((total, item) => total + item.subtotal, 0)
+  );
+
   return (
     <div className="h-screen">
       <div className="mx-auto max-w-6xl justify-center px-2 md:flex md:space-x-6 xl:px-0">
@@ -323,28 +327,26 @@ function MyComponent() {
                   <td colSpan={3}>Total (Bought Items)</td>
                   <td>Rp.{totalBought.toLocaleString()}</td>
                 </tr>
-                {selected.length > 0 && (
-                  <tr>
-                    <td colSpan={5} className="gap-2 flex">
-                      <button
-                        className="btn btn-outline btn-error"
-                        onClick={handleDeleteSelected}
-                      >
-                        {selected.length}
-                        <TrashIcon className="h-6 w-6" />
-                      </button>
-                      <button
-                        className="btn btn-outline"
-                        onClick={handleIsBoughtSelected}
-                      >
-                        Mark {selected.length} items as bought
-                      </button>
-                    </td>
-                  </tr>
-                )}
               </tbody>
             </table>
           </div>
+          {selected.length > 0 && (
+            <div className="gap-2 flex">
+              <button
+                className="btn btn-outline btn-error"
+                onClick={handleDeleteSelected}
+              >
+                {selected.length}
+                <TrashIcon className="h-6 w-6" />
+              </button>
+              <button
+                className="btn btn-outline"
+                onClick={handleIsBoughtSelected}
+              >
+                Mark {selected.length} items as bought
+              </button>
+            </div>
+          )}
           <button
             className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600"
             onClick={saveNotesToInstance}
@@ -362,34 +364,38 @@ function MyComponent() {
                   <th>Quantity</th>
                   <th>Price</th>
                   <th>Subtotal</th>
-                  <th>isBought</th>
                 </tr>
               </thead>
               <tbody>
-                {instance.map((inst, index) =>
-                  inst.map((item, noteIndex) => (
-                    <tr
-                      key={`${item.productName}-${noteIndex}`}
-                      className={item.isBought ? "text-gray-500" : ""}
-                    >
-                      {noteIndex === 0 && (
-                        <td rowSpan={inst.length}>
-                          Instance {index + 1}{" "}
-                          <button
-                            onClick={() => moveInstanceToActiveNotes(index)}
-                          >
-                            <PlusCircleIcon className="h-6 w-6 text-gray-400" />
-                          </button>
-                        </td>
-                      )}
-                      <td>{item.productName}</td>
-                      <td>{item.quantity}</td>
-                      <td>Rp.{item.price.toLocaleString()}</td>
-                      <td>Rp.{item.subtotal.toLocaleString()}</td>
-                      <td>{item.isBought ? "Yes" : "No"}</td>
+                {instance.map((inst, index) => (
+                  <>
+                    {inst.map((item, noteIndex) => (
+                      <tr
+                        key={`${item.productName}-${noteIndex}`}
+                        className={item.isBought ? "text-gray-500" : ""}
+                      >
+                        {noteIndex === 0 && (
+                          <th rowSpan={inst.length}>
+                            Instance {index + 1}{" "}
+                            <button
+                              onClick={() => moveInstanceToActiveNotes(index)}
+                            >
+                              <PlusCircleIcon className="h-6 w-6 text-gray-400" />
+                            </button>
+                          </th>
+                        )}
+                        <td>{item.productName}</td>
+                        <td>{item.quantity}</td>
+                        <td>Rp.{item.price.toLocaleString()}</td>
+                        <td>Rp.{item.subtotal.toLocaleString()}</td>
+                      </tr>
+                    ))}
+                    <tr>
+                      <td colSpan={4}>Total for Instance {index + 1}</td>
+                      <th>Rp.{instanceTotals[index].toLocaleString()}</th>
                     </tr>
-                  ))
-                )}
+                  </>
+                ))}
               </tbody>
             </table>
           </div>
