@@ -205,8 +205,8 @@ function MyComponent() {
 
   return (
     <div className="h-screen">
-      <div className="mx-auto max-w-6xl justify-center px-2 md:flex md:space-x-6 xl:px-0">
-        <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
+      <div className="mx-auto justify-center px-2">
+        <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0">
           <div className="form-control">
             <label className="label">
               <span className="label-text">Product Name</span>
@@ -249,7 +249,7 @@ function MyComponent() {
             Save
           </button>
         </div>
-        <div className="pt-10 rounded-lg md:w-2/3">
+        <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0">
           <div className="overflow-x-auto justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
             <table className="table table-sm">
               <thead>
@@ -354,7 +354,7 @@ function MyComponent() {
             Save To Instance
           </button>
         </div>
-        <div className="pt-10 rounded-lg md:w-2/3">
+        <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0">
           <div className="overflow-x-auto justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
             <table className="table table-sm">
               <thead>
@@ -368,7 +368,7 @@ function MyComponent() {
               </thead>
               <tbody>
                 {instance.map((inst, index) => (
-                  <>
+                  <React.Fragment key={`instance-${index}`}>
                     {inst.map((item, noteIndex) => (
                       <tr
                         key={`${item.productName}-${noteIndex}`}
@@ -376,7 +376,7 @@ function MyComponent() {
                       >
                         {noteIndex === 0 && (
                           <th rowSpan={inst.length}>
-                            Instance {index + 1}{" "}
+                            Instance{index + 1}{" "}
                             <button
                               onClick={() => moveInstanceToActiveNotes(index)}
                             >
@@ -391,10 +391,10 @@ function MyComponent() {
                       </tr>
                     ))}
                     <tr>
-                      <td colSpan={4}>Total for Instance {index + 1}</td>
+                      <td colSpan={4}>Total for Instance{index + 1}</td>
                       <th>Rp.{instanceTotals[index].toLocaleString()}</th>
                     </tr>
-                  </>
+                  </React.Fragment>
                 ))}
               </tbody>
             </table>
