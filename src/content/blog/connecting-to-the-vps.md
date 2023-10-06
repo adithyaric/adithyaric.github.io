@@ -1,10 +1,14 @@
 ---
+author: Adithya Ricky
+pubDatetime: 2023-10-06T13:19:02Z
 title: Connecting to the VPS
-description: Steps to deploy a Node.js app to DigitalOcean using PM2, NGINX as a reverse
-  proxy and an SSL from LetsEncrypt
-pubDate: Mar 07 2023
-heroImage: /cloud.png
-slug: connecting-vps
+postSlug: connecting-vps
+featured: true
+draft: false
+tags:
+  - docs
+  - tutorial
+description: Steps to deploy a Node.js app to DigitalOcean using PM2, NGINX as a reverse proxy and an SSL from LetsEncrypt.
 ---
 
 To connect your VPS server, you can use your server IP, you can create a root password and enter the server with your IP address and password credentials. But the more secure way is using an SSH key.
@@ -14,8 +18,8 @@ To connect your VPS server, you can use your server IP, you can create a root pa
 ### For MAC OS / Linux / Windows 10 (with openssh)
 
 1. Launch the Terminal app.
-2. ```ssh-keygen -t rsa```
-3. Press ```ENTER``` to store the key in the default folder /Users/lamadev/.ssh/id_rsa).
+2. `ssh-keygen -t rsa`
+3. Press `ENTER` to store the key in the default folder /Users/lamadev/.ssh/id_rsa).
 4. Type a passphrase (characters will not appear in the terminal).
 5. Confirm your passphrase to finish SSH Keygen. You should get an output that looks something like this:
 
@@ -47,7 +51,7 @@ cat ~/.ssh/id_rsa.pub
 ### For Windows
 
 1. Download PuTTY and PuTTYgen.
-2. Open up PuTTYgen and click the ```Generate```.
+2. Open up PuTTYgen and click the `Generate`.
 3. Copy your key.
 4. Enter a key passphrase and confirm.
 5. Save the private key.
@@ -56,13 +60,13 @@ cat ~/.ssh/id_rsa.pub
 
 After copying the SSH Key go the to hosting service provider dashboard and paste your key and save. After,
 
-***For MAC OS / Linux***
+**_For MAC OS / Linux_**
 
 ```bash
 ssh root@<server ip address>
 ```
 
-***For Windows***
+**_For Windows_**
 
 1. Open the PuTTY app.
 2. Enter your IP address.
@@ -245,7 +249,7 @@ cp .env.example .env
 node index.js
 ```
 
-> But if you close your ssh session here. It's gonna kill this process. To prevent this we are going to need a package which is called ```pm2```
+> But if you close your ssh session here. It's gonna kill this process. To prevent this we are going to need a package which is called `pm2`
 
 ```bash
 npm i -g pm2

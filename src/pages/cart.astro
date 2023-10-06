@@ -1,0 +1,16 @@
+---
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import { SITE } from "@config";
+import CartPage from "@components/Cart";
+---
+
+<Layout title={`Cart | ${SITE.title}`}>
+  <Header activeNav="cart" />
+  <Main pageTitle="Cart" pageDesc="Simple Cart System, Just for Fun ✌">
+    <CartPage client:load />
+  </Main>
+  <Footer />
+</Layout>

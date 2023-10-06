@@ -1,11 +1,15 @@
 ---
+author: Adithya Ricky
+pubDatetime: 2023-10-06T13:19:02Z
 title: Markdown Style Guide
-description: Here is a sample of some basic Markdown syntax that can be used when writing
+postSlug: markdown-style-guide
+featured: true
+draft: false
+tags:
+  - docs
+description:
+  Here is a sample of some basic Markdown syntax that can be used when writing
   Markdown content in Astro.
-pubDate: Jul 01 2022
-heroImage: /placeholder-hero.jpg
-slug: markdown-style-guide
-lastmod: 2023-03-08T03:28:01.457Z
 ---
 
 Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.
@@ -14,7 +18,7 @@ Here is a sample of some basic Markdown syntax that can be used when writing Mar
 
 The following HTML `<h1>`—`<h6>` elements represent six levels of section headings. `<h1>` is the highest section level while `<h6>` is the lowest.
 
-***code:***
+**_code:_**
 
 ```md
 #H1
@@ -25,7 +29,7 @@ The following HTML `<h1>`—`<h6>` elements represent six levels of section head
 ######H6
 ```
 
-***result:***
+**_result:_**
 
 # H1
 
@@ -65,11 +69,11 @@ The blockquote element represents content that is quoted from another source, op
 
 ```md
 > Tiam, ad mint andaepu dandae nostion secatur sequo quae.
-> **Note** that you can use *Markdown syntax* within a blockquote.
+> **Note** that you can use _Markdown syntax_ within a blockquote.
 ```
 
 > Tiam, ad mint andaepu dandae nostion secatur sequo quae.
-> **Note** that you can use *Markdown syntax* within a blockquote.
+> **Note** that you can use _Markdown syntax_ within a blockquote.
 
 #### Blockquote with attribution
 
@@ -82,12 +86,12 @@ The blockquote element represents content that is quoted from another source, op
 
 | Italics   | Bold     | Code   |
 | --------- | -------- | ------ |
-| *italics* | **bold** | `code` |
+| _italics_ | **bold** | `code` |
 
 ## Code Blocks
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
