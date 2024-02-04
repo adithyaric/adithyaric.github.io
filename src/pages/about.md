@@ -16,6 +16,7 @@ As an experienced backend developer, I'm skilled in Laravel and related packages
 **Company:** my.publikasimedia.com | Publikasimedia
 
 **Duration:** May 2022 - Present
+
 **Responsibilities:**
 
 - Built, improved and maintained web application
@@ -26,6 +27,7 @@ As an experienced backend developer, I'm skilled in Laravel and related packages
 **Company:** Decaa ID
 
 **Duration:** June 2022 - Present
+
 **Projects:**
 
 1. _[Pencatatan PT. Tuban Prima Energi](/posts/screen-shot/#inventory)_

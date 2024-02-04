@@ -29,7 +29,7 @@ Go memiliki kelebihan dibanding bahasa lainnya, beberapa di antaranya:
 - Dependensi dan _tooling_ yang disediakan terbilang lengkap.
 - Dukungan komunitas sangat bagus. Banyak tools yang tersedia secara gratis dan _open source_ yang bisa langsung dimanfaatkan.
 
-Sudah banyak industri dan perusahaan yg menggunakan Go sampai level production, termasuk di antaranya adalah Google sendiri, dan juga tempat di mana penulis bekerja 😁
+Sudah banyak industri dan perusahaan yg menggunakan Go sampai level production, termasuk di antaranya adalah Google sendiri, dan juga tempat di mana [penulis](https://github.com/novalagung/dasarpemrogramangolang) bekerja 😁
 
 ---
 
@@ -509,3 +509,5 @@ fmt.Println("Hello", "world!", "how", "are", "you")
 Contoh statement di atas akan menghasilkan output: **Hello world! how are you**.
 
 ---
+
+sumber : https://github.com/novalagung/dasarpemrogramangolang
