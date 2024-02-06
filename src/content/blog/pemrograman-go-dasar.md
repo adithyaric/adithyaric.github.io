@@ -388,11 +388,11 @@ Command ini digunakan untuk vendoring. Lebih detailnya akan dibahas di akhir ser
 
 Semua persiapan sudah selesai, saatnya masuk pada sesi programming. Program pertama yang akan kita buat adalah aplikasi kecil yang menampilkan text **Hello world**.
 
-Pada chapter ini akan dijelaskan secara komprehensif *step-by-step* mulai dari awal. Mulai dari pembuatan project, pembuatan file program, sesi penulisan kode (coding), hingga eksekusi program.
+Pada chapter ini akan dijelaskan secara komprehensif _step-by-step_ mulai dari awal. Mulai dari pembuatan project, pembuatan file program, sesi penulisan kode (coding), hingga eksekusi program.
 
 ## A.7.1. Inisialisasi Project
 
-Buat direktori bernama `hello-world` bebas ditempatkan di mana. Lalu via CLI, masuk ke direktori tersebut dan jalankan *command* untuk inisialisasi project.
+Buat direktori bernama `hello-world` bebas ditempatkan di mana. Lalu via CLI, masuk ke direktori tersebut dan jalankan _command_ untuk inisialisasi project.
 
 ```
 mkdir hello-world
@@ -410,7 +410,7 @@ Buka editor, di sini penulis menggunakan VSCode. Cari menu untuk menambahkan pro
 
 ## A.7.3. Menyiapkan File Program
 
-File program di sini maksudnya adalah file yang isinya *source code* Go. File ini berekstensi `.go`.
+File program di sini maksudnya adalah file yang isinya _source code_ Go. File ini berekstensi `.go`.
 
 Di dalam project yang telah dibuat, siapkan sebuah file dengan nama bebas, yang jelas harus ber-ekstensi `.go`. Pada contoh ini saya menggunakan nama file `main.go`.
 
@@ -420,7 +420,7 @@ Pembuatan file program bisa dilakukan lewat CLI atau browser, atau juga lewat ed
 
 ## A.7.4. Program Pertama: Hello Word
 
-Setelah project folder dan file program sudah siap, saatnya untuk *programming*.
+Setelah project folder dan file program sudah siap, saatnya untuk _programming_.
 
 Di bawah ini merupakan contoh kode program sederhana untuk memunculkan text **Hello world** ke layar output command prompt. Silakan salin kode berikut ke file program yang telah dibuat. Sebisa mungkin jangan copy paste. Biasakan untuk menulis dari awal, agar cepat terbiasa dan familiar dengan Go.
 
@@ -453,9 +453,9 @@ Berikut merupakan pembahasan untuk tiap baris kode yang sudah ditulis di atas.
 
 ## A.7.5. Penggunaan Keyword `package`
 
-Setiap file program harus memiliki **package**. Setiap project harus ada minimal satu file dengan nama *package* `main`. File yang ber-*package* `main`, akan dieksekusi pertama kali ketika program di jalankan.
+Setiap file program harus memiliki **package**. Setiap project harus ada minimal satu file dengan nama _package_ `main`. File yang ber-_package_ `main`, akan dieksekusi pertama kali ketika program di jalankan.
 
-Cara menentukan *package* dengan menggunakan keyword `package`, berikut adalah contoh penulisannya.
+Cara menentukan _package_ dengan menggunakan keyword `package`, berikut adalah contoh penulisannya.
 
 ```go
 package <nama-package>
@@ -464,9 +464,9 @@ package main
 
 ## A.7.6. Penggunaan Keyword `import`
 
-Keyword `import` digunakan untuk meng-*import* atau memasukan *package* lain ke dalam file program, agar isi dari package yang di-*import* bisa dimanfaatkan.
+Keyword `import` digunakan untuk meng-_import_ atau memasukan _package_ lain ke dalam file program, agar isi dari package yang di-_import_ bisa dimanfaatkan.
 
-*Package* `fmt` merupakan salah satu *package* bawaan yang disediakan oleh Go, isinya banyak fungsi untuk keperluan **I/O** yang berhubungan dengan text.
+_Package_ `fmt` merupakan salah satu _package_ bawaan yang disediakan oleh Go, isinya banyak fungsi untuk keperluan **I/O** yang berhubungan dengan text.
 
 Berikut adalah skema penulisan keyword `import`:
 
@@ -508,6 +508,544 @@ fmt.Println("Hello", "world!", "how", "are", "you")
 
 Contoh statement di atas akan menghasilkan output: **Hello world! how are you**.
 
----
+# A.8. Komentar
+
+Komentar biasa dimanfaatkan untuk menyisipkan catatan pada kode program, menulis penjelasan/deskripsi mengenai suatu blok kode, atau bisa juga digunakan untuk me-_remark_ kode (men-non-aktifkan kode yg tidak digunakan). Komentar akan diabaikan ketika kompilasi maupun eksekusi program.
+
+Ada 2 jenis komentar di Go, _inline_ & _multiline_. Pada pembahasan ini akan dijelaskan tentang penerapan dan perbedaan kedua jenis komentar tersebut.
+
+## A.8.1. Komentar _Inline_
+
+Penulisan komentar jenis ini di awali dengan tanda **double slash** (`//`) lalu diikuti pesan komentarnya. Komentar inline hanya berlaku untuk satu baris pesan saja. Jika pesan komentar lebih dari satu baris, maka tanda `//` harus ditulis lagi di baris selanjutnya.
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    // komentar kode
+    // menampilkan pesan hello world
+    fmt.Println("hello world")
+
+    // fmt.Println("baris ini tidak akan dieksekusi")
+}
+```
+
+Mari kita praktekan kode di atas. Siapkan file program baru dalam project folder (bisa buat project baru atau gunakan project yang sudah ada). Kemudian isi dengan kode di atas, lalu jalankan.
+
+![Contoh komentar inline](/assets/images//A_komentar_1_inline_comment.png)
+
+Hasilnya hanya tulisan **hello world** saja yang muncul di layar, karena semua yang di awali tanda double slash `//` diabaikan oleh compiler.
+
+## A.8.2. Komentar _Multiline_
+
+Komentar yang cukup panjang akan lebih rapi jika ditulis menggunakan teknik komentar multiline. Ciri dari komentar jenis ini adalah penulisannya diawali dengan tanda `/*` dan diakhiri `*/`.
+
+```go
+/*
+    komentar kode
+    menampilkan pesan hello world
+*/
+fmt.Println("hello world")
+
+// fmt.Println("baris ini tidak akan dieksekusi")
+```
+
+Sifat komentar ini sama seperti komentar inline, yaitu sama-sama diabaikan oleh compiler.
+
+# A.9. Variabel
+
+Go mengadopsi dua jenis penulisan variabel, yaitu yang dituliskan tipe data-nya, dan juga yang tidak. Kedua cara tersebut valid dan tujuannya sama, pembedanya hanya cara penulisannya saja.
+
+Pada chapter ini akan dikupas tuntas tentang macam-macam cara deklarasi variabel.
+
+## A.9.1. Deklarasi Variabel Beserta Tipe Data
+
+Go memiliki aturan cukup ketat dalam hal penulisan variabel. Ketika deklarasi, tipe data yg digunakan harus dituliskan juga. Istilah lain dari konsep ini adalah **manifest typing**.
+
+Berikut adalah contoh cara pembuatan variabel yang tipe datanya harus ditulis. Silakan tulis pada project baru atau pada project yang sudah ada, bebas. Pastikan saja untuk setiap project baru untuk tidak lupa inisialisasi project menggunakan command `go mod init <nama-project>`. Ok lanjut.
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    var firstName string = "john"
+
+    var lastName string
+    lastName = "wick"
+
+    fmt.Printf("halo %s %s!\n", firstName, lastName)
+}
+```
+
+Keyword `var` di atas digunakan untuk deklarasi variabel, contohnya bisa dilihat pada `firstName` dan `lastName`.
+
+Nilai variabel `firstName` diisi langsung ketika deklarasi, berbeda dibanding `lastName` yang nilainya diisi setelah baris kode deklarasi, hal seperti ini diperbolehkan di Go.
+
+![Menampilkan isi variabel](/assets/images//A_variabel_1_variabel.png)
+
+## A.9.2. Deklarasi Variabel Menggunakan Keyword `var`
+
+Pada kode di atas bisa dilihat bagaimana sebuah variabel dideklarasikan dan diisi nilainya. Keyword `var` digunakan untuk membuat variabel baru.
+
+Skema penggunaan keyword var:
+
+```go
+var <nama-variabel> <tipe-data>
+var <nama-variabel> <tipe-data> = <nilai>
+```
+
+Contoh:
+
+```go
+var lastName string
+var firstName string = "john"
+```
+
+Nilai variabel bisa di-isi langsung pada saat deklarasi variabel.
+
+#### • Penggunaan Fungsi `fmt.Printf()`
+
+Fungsi ini digunakan untuk menampilkan output dalam bentuk tertentu. Kegunaannya sama seperti fungsi `fmt.Println()`, hanya saja struktur outputnya didefinisikan di awal.
+
+Perhatikan bagian `"halo %s %s!\n"`, karakter `%s` di situ akan diganti dengan data `string` yang berada di parameter ke-2, ke-3, dan seterusnya.
+
+Contoh lain, ketiga baris kode berikut ini akan menghasilkan output yang sama, meskipun cara penulisannya berbeda.
+
+```go
+fmt.Printf("halo john wick!\n")
+fmt.Printf("halo %s %s!\n", firstName, lastName)
+fmt.Println("halo", firstName, lastName + "!")
+```
+
+Tanda plus (`+`) jika ditempatkan di antara string, fungsinya adalah untuk penggabungan string atau _string concatenation_.
+
+Fungsi `fmt.Printf()` tidak menghasilkan baris baru di akhir text, oleh karena itu digunakanlah literal _newline_ yaitu `\n`, untuk memunculkan baris baru di akhir. Hal ini sangat berbeda jika dibandingkan dengan fungsi `fmt.Println()` yang secara otomatis menghasilkan new line (baris baru) di akhir.
+
+## A.9.3. Deklarasi Variabel Tanpa Tipe Data
+
+Selain _manifest typing_, Go juga mengadopsi konsep **type inference**, yaitu metode deklarasi variabel yang tipe data-nya ditentukan oleh tipe data nilainya, cara kontradiktif jika dibandingkan dengan cara pertama. Dengan metode jenis ini, keyword `var` dan tipe data tidak perlu ditulis.
+
+```go
+var firstName string = "john"
+lastName := "wick"
+
+fmt.Printf("halo %s %s!\n", firstName, lastName)
+```
+
+Variabel `lastName` dideklarasikan dengan menggunakan metode type inference. Penandanya tipe data tidak dituliskan pada saat deklarasi. Pada penggunaan metode ini, operand `=` harus diganti dengan `:=` dan keyword `var` dihilangkan.
+
+Tipe data `lastName` secara otomatis akan ditentukan menyesuaikan value atau nilai-nya. Jika nilainya adalah berupa `string` maka tipe data variabel adalah `string`. Pada contoh di atas, nilainya adalah string `"wick"`.
+
+Diperbolehkan untuk tetap menggunakan keyword `var` pada saat deklarasi meskipun tanpa menuliskan tipe data, dengan ketentuan tidak menggunakan tanda `:=`, melainkan tetap menggunakan `=`.
+
+```go
+// menggunakan var, tanpa tipe data, menggunakan perantara "="
+var firstName = "john"
+
+// tanpa var, tanpa tipe data, menggunakan perantara ":="
+lastName := "wick"
+```
+
+Kedua deklarasi di atas maksudnya sama. Silakan pilih yang nyaman di hati.
+
+Tanda `:=` hanya digunakan sekali di awal pada saat deklarasi. Untuk assignment nilai selanjutnya harus menggunakan tanda `=`, contoh:
+
+```go
+lastName := "wick"
+lastName = "ethan"
+lastName = "bourne"
+```
+
+> Perlu diketahui, deklarasi menggunakan `:=` hanya bisa dilakukan di dalam blok fungsi.
+
+## A.9.4. Deklarasi Multi Variabel
+
+Go mendukung metode deklarasi banyak variabel secara bersamaan, caranya dengan menuliskan variabel-variabel-nya dengan pembatas tanda koma (`,`). Untuk pengisian nilainya-pun diperbolehkan secara bersamaan.
+
+```go
+var first, second, third string
+first, second, third = "satu", "dua", "tiga"
+```
+
+Pengisian nilai juga bisa dilakukan bersamaan pada saat deklarasi. Caranya dengan menuliskan nilai masing-masing variabel berurutan sesuai variabelnya dengan pembatas koma (`,`).
+
+```go
+var fourth, fifth, sixth string = "empat", "lima", "enam"
+```
+
+Kalau ingin lebih ringkas:
+
+```go
+seventh, eight, ninth := "tujuh", "delapan", "sembilan"
+```
+
+Dengan menggunakan teknik type inference, deklarasi multi variabel bisa dilakukan untuk variabel-variabel yang tipe data satu sama lainnya berbeda.
+
+```
+one, isFriday, twoPointTwo, say := 1, true, 2.2, "hello"
+```
+
+## A.9.5. Variabel Underscore `_`
+
+Go memiliki aturan unik yang jarang dimiliki bahasa lain, yaitu tidak boleh ada satupun variabel yang menganggur. Artinya, semua variabel yang dideklarasikan harus digunakan. Jika ada variabel yang tidak digunakan tapi dideklarasikan, error akan muncul pada saat kompilasi dan program tidak akan bisa di-run.
+
+![Variabel pengangguran](/assets/images//A_variabel_2_unused_variabel.png)
+
+_Underscore_ (`_`) adalah _reserved variable_ yang bisa dimanfaatkan untuk menampung nilai yang tidak dipakai. Bisa dibilang variabel ini merupakan keranjang sampah.
+
+```go
+_ = "belajar Golang"
+_ = "Golang itu mudah"
+name, _ := "john", "wick"
+```
+
+Pada contoh di atas, variabel `name` akan berisikan text `john`, sedang nilai `wick` ditampung oleh variabel underscore, menandakan bahwa nilai tersebut tidak akan digunakan.
+
+Variabel underscore adalah _predefined_, jadi tidak perlu menggunakan `:=` untuk pengisian nilai, cukup dengan `=` saja. Namun khusus untuk pengisian nilai multi variabel yang dilakukan dengan metode type inference, boleh di dalamnya terdapat variabel underscore.
+
+Biasanya variabel underscore sering dimanfaatkan untuk menampung nilai balik fungsi yang tidak digunakan.
+
+Perlu diketahui, bahwa isi variabel underscore tidak dapat ditampilkan. Data yang sudah masuk variabel tersebut akan hilang. Ibaratkan variabel underscore seperti blackhole, objek apapun yang masuk ke dalamnya, akan terjebak selamanya di-dalam singularity dan tidak akan bisa keluar 😁
+
+## A.9.6. Deklarasi Variabel Menggunakan Keyword `new`
+
+Keyword `new` digunakan untuk membuat variabel **pointer** dengan tipe data tertentu. Nilai data default-nya akan menyesuaikan tipe datanya.
+
+```go
+name := new(string)
+
+fmt.Println(name)   // 0x20818a220
+fmt.Println(*name)  // ""
+```
+
+Variabel `name` menampung data bertipe **pointer string**. Jika ditampilkan yang muncul bukanlah nilainya melainkan alamat memori nilai tersebut (dalam bentuk notasi heksadesimal). Untuk menampilkan nilai aslinya, variabel tersebut perlu di-**dereference** terlebih dahulu, menggunakan tanda asterisk (`*`).
+
+Mungkin untuk sekarang banyak yang akan bingung tentang apa itu pointer, namun tak apa, karena nantinya pada chapter [A.23. Pointer](/A-pointer.html) akan dikupas habis topik tersebut.
+
+## A.9.7. Deklarasi Variabel Menggunakan Keyword `make`
+
+Keyword ini hanya bisa digunakan untuk pembuatan beberapa jenis variabel saja, yaitu:
+
+- channel
+- slice
+- map
+
+Dan lagi, mungkin banyak yang akan bingung. Ketika sudah masuk ke pembahasan masing-masing poin tersebut, akan terlihat apa kegunaan dari keyword `make` ini.
+
+# A.10. Tipe Data
+
+Go mengenal beberapa jenis tipe data, di antaranya adalah tipe data numerik (desimal & non-desimal), string, dan boolean.
+
+Pada pembahasan-pembahasan sebelumnya secara tak sadar kita sudah mengaplikasikan beberapa tipe data, seperti `string` dan tipe numerik `int`.
+
+Pada chapter ini akan dijelaskan beberapa macam tipe data standar yang disediakan oleh Go, beserta cara penggunaannya.
+
+## A.10.1. Tipe Data Numerik Non-Desimal
+
+Tipe data numerik non-desimal atau **non floating point** di Go ada beberapa jenis. Secara umum ada 2 tipe data kategori ini yang perlu diketahui.
+
+- `uint`, tipe data untuk bilangan cacah (bilangan positif).
+- `int`, tipe data untuk bilangan bulat (bilangan negatif dan positif).
+
+Kedua tipe data di atas kemudian dibagi lagi menjadi beberapa jenis, dengan pembagian berdasarkan lebar cakupan nilainya, detailnya bisa dilihat di tabel berikut.
+
+| Tipe data | Cakupan bilangan                                      |
+| :-------: | :---------------------------------------------------- |
+|  `uint8`  | 0 ↔ 255                                              |
+| `uint16`  | 0 ↔ 65535                                            |
+| `uint32`  | 0 ↔ 4294967295                                       |
+| `uint64`  | 0 ↔ 18446744073709551615                             |
+|  `uint`   | sama dengan `uint32` atau `uint64` (tergantung nilai) |
+|  `byte`   | sama dengan `uint8`                                   |
+|  `int8`   | -128 ↔ 127                                           |
+|  `int16`  | -32768 ↔ 32767                                       |
+|  `int32`  | -2147483648 ↔ 2147483647                             |
+|  `int64`  | -9223372036854775808 ↔ 9223372036854775807           |
+|   `int`   | sama dengan `int32` atau `int64` (tergantung nilai)   |
+|  `rune`   | sama dengan `int32`                                   |
+
+Dianjurkan untuk tidak sembarangan dalam menentukan tipe data variabel, sebisa mungkin tipe yang dipilih harus disesuaikan dengan nilainya, karena efeknya adalah ke alokasi memori variabel. Pemilihan tipe data yang tepat akan membuat pemakaian memori lebih optimal, tidak berlebihan.
+
+```go
+var positiveNumber uint8 = 89
+var negativeNumber = -1243423644
+
+fmt.Printf("bilangan positif: %d\n", positiveNumber)
+fmt.Printf("bilangan negatif: %d\n", negativeNumber)
+```
+
+Variabel `positiveNumber` bertipe `uint8` dengan nilai awal `89`. Sedangkan variabel `negativeNumber` dideklarasikan dengan nilai awal `-1243423644`. Compiler secara cerdas akan menentukan tipe data variabel tersebut sebagai `int32` (karena angka tersebut masuk ke cakupan tipe data `int32`).
+
+Template `%d` pada `fmt.Printf()` digunakan untuk memformat data numerik non-desimal.
+
+## A.10.2. Tipe Data Numerik Desimal
+
+Tipe data numerik desimal yang perlu diketahui ada 2, `float32` dan `float64`. Perbedaan kedua tipe data tersebut berada di lebar cakupan nilai desimal yang bisa ditampung. Untuk lebih jelasnya bisa merujuk ke spesifikasi [IEEE-754 32-bit floating-point numbers](http://www.h-schmidt.net/FloatConverter/IEEE754.html).
+
+```go
+var decimalNumber = 2.62
+
+fmt.Printf("bilangan desimal: %f\n", decimalNumber)
+fmt.Printf("bilangan desimal: %.3f\n", decimalNumber)
+```
+
+Pada kode di atas, variabel `decimalNumber` akan memiliki tipe data `float32`, karena nilainya berada di cakupan tipe data tersebut.
+
+![Tipe data numerik desimal](/assets/images//A_tipe_data_1_decimal_data_type.png)
+
+Template `%f` digunakan untuk memformat data numerik desimal menjadi string. Digit desimal yang akan dihasilkan adalah **6 digit**. Pada contoh di atas, hasil format variabel `decimalNumber` adalah `2.620000`. Jumlah digit yang muncul bisa dikontrol menggunakan `%.nf`, tinggal ganti `n` dengan angka yang diinginkan. Contoh: `%.3f` maka akan menghasilkan 3 digit desimal, `%.10f` maka akan menghasilkan 10 digit desimal.
+
+## A.10.3. Tipe Data `bool` (Boolean)
+
+Tipe data `bool` berisikan hanya 2 variansi nilai, `true` dan `false`. Tipe data ini biasa dimanfaatkan dalam seleksi kondisi dan perulangan (yang nantinya akan kita bahas pada [A.13. Seleksi Kondisi](/A-seleksi-kondisi.html) dan [A.14. Perulangan](/A-perulangan.html)).
+
+```go
+var exist bool = true
+fmt.Printf("exist? %t \n", exist)
+```
+
+Gunakan `%t` untuk memformat data `bool` menggunakan fungsi `fmt.Printf()`.
+
+## A.10.4. Tipe Data `string`
+
+Ciri khas dari tipe data string adalah nilainya di apit oleh tanda _quote_ atau petik dua (`"`). Contoh penerapannya:
+
+```go
+var message string = "Halo"
+fmt.Printf("message: %s \n", message)
+```
+
+Selain menggunakan tanda quote, deklarasi string juga bisa dengan tanda _grave accent/backticks_ (<code>`</code>), tanda ini terletak di sebelah kiri tombol 1. Keistimewaan string yang dideklarasikan menggunakan backtics adalah membuat semua karakter di dalamnya **tidak di escape**, termasuk `\n`, tanda petik dua dan tanda petik satu, baris baru, dan lainnya. Semua akan terdeteksi sebagai string.
+
+```go
+var message = `Nama saya "John Wick".
+Salam kenal.
+Mari belajar "Golang".`
+
+fmt.Println(message)
+```
+
+Ketika dijalankan, output akan muncul sama persisi sesuai nilai variabel `message` di atas. Tanda petik dua akan muncul, baris baru juga muncul, sama persis.
+
+![String menggunakan grave accent](/assets/images//A_tipe_data_2_unescaped_string.png)
+
+## A.10.5. Nilai `nil` & Zero Value
+
+`nil` bukan merupakan tipe data, melainkan sebuah nilai. Variabel yang isi nilainya `nil` berarti memiliki nilai kosong.
+
+Semua tipe data yang sudah dibahas di atas memiliki zero value (nilai default tipe data). Artinya meskipun variabel dideklarasikan dengan tanpa nilai awal, tetap akan ada nilai default-nya.
+
+- Zero value dari `string` adalah `""` (string kosong).
+- Zero value dari `bool` adalah `false`.
+- Zero value dari tipe numerik non-desimal adalah `0`.
+- Zero value dari tipe numerik desimal adalah `0.0`.
+
+Zero value berbeda dengan `nil`. `Nil` adalah nilai kosong, benar-benar kosong. `nil` tidak bisa digunakan pada tipe data yang sudah dibahas di atas. Ada beberapa tipe data yang bisa di-set nilainya dengan `nil`, di antaranya:
+
+- pointer
+- tipe data fungsi
+- slice
+- `map`
+- `channel`
+- interface kosong atau `any` (yang merupakan alias dari `interface{}`)
+
+Nantinya kita akan sering bertemu dengan `nil` setelah masuk pada pembahasan-pembahasan tersebut.
+
+# A.11. Konstanta
+
+Konstanta adalah jenis variabel yang nilainya tidak bisa diubah. Inisialisasi nilai hanya dilakukan sekali di awal, setelah itu variabel tidak bisa diubah nilainya.
+
+## A.11.1. Penggunaan Konstanta
+
+Data seperti **pi** (22/7), kecepatan cahaya (299.792.458 m/s), adalah contoh data yang tepat jika dideklarasikan sebagai konstanta daripada variabel, karena nilainya sudah pasti dan tidak berubah.
+
+Cara penerapan konstanta sama seperti deklarasi variabel biasa, selebihnya tinggal ganti keyword `var` dengan `const`.
+
+```go
+const firstName string = "john"
+fmt.Print("halo ", firstName, "!\n")
+```
+
+Teknik type inference bisa diterapkan pada konstanta, caranya yaitu cukup dengan menghilangkan tipe data pada saat deklarasi.
+
+```go
+const lastName = "wick"
+fmt.Print("nice to meet you ", lastName, "!\n")
+```
+
+#### • Penggunaan Fungsi `fmt.Print()`
+
+Fungsi ini memiliki peran yang sama seperti fungsi `fmt.Println()`, pembedanya fungsi `fmt.Print()` tidak menghasilkan baris baru di akhir outputnya.
+
+Perbedaan lainnya adalah, nilai pada parameter-parameter yang dimasukkan ke fungsi tersebut digabungkan tanpa pemisah. Tidak seperti pada fungsi `fmt.Println()` yang nilai paremeternya digabung menggunakan penghubung spasi.
+
+```go
+fmt.Println("john wick")
+fmt.Println("john", "wick")
+
+fmt.Print("john wick\n")
+fmt.Print("john ", "wick\n")
+fmt.Print("john", " ", "wick\n")
+```
+
+Kode di atas menunjukkan perbedaan antara `fmt.Println()` dan `fmt.Print()`. Output yang dihasilkan oleh 5 statement di atas adalah sama, meski cara yang digunakan berbeda.
+
+Bila menggunakan `fmt.Println()` tidak perlu menambahkan spasi di tiap kata, karena fungsi tersebut akan secara otomatis menambahkannya di sela-sela nilai. Berbeda dengan `fmt.Print()`, perlu ditambahkan spasi, karena fungsi ini tidak menambahkan spasi di sela-sela nilai parameter yang digabungkan.
+
+## A.11.2. Deklarasi Multi Konstanta
+
+Sama seperti variabel, konstanta juga dapat dideklarasikan secara bersamaan.
+
+Berikut adalah contoh deklarasi konstanta dengan tipe data dan nilai yang berbeda.
+
+```go
+const (
+    square          = "kotak"
+    isToday bool    = true
+    numeric uint8   = 1
+    floatNum        = 2.2
+)
+```
+
+- `square`, dideklarasikan dengan metode _type inference_ dengan tipe data **string** dan nilainya **"kotak"**
+- `isToday`, dideklarasikan dengan metode _manifest typing_ dengan tipe data **bool** dan nilainya **true**
+- `numeric`, dideklarasikan dengan metode _manifest typing_ dengan tipe data **uint8** dan nilainya **1**
+- `floatNum`, dideklarasikan dengan metode _type inference_ dengan tipe data **float** dan nilainya **2.2**
+
+Contoh deklarasi konstanta dengan tipe data dan nilai yang sama:
+
+```go
+const (
+    a = "konstanta"
+    b
+)
+```
+
+> Ketika tipe data dan nilai tidak dituliskan dalam deklarasi konstanta, maka tipe data dan nilai yang dipergunakan adalah sama seperti konstanta yang dideklarasikan diatasnya.
+
+- `a` dideklarasikan dengan metode _type inference_ dengan tipe data **string** dan nilainya **"konstanta"**
+- `b` dideklarasikan dengan metode _type inference_ dengan tipe data **string** dan nilainya **"konstanta"**
+
+Berikut contoh gabungan dari keduanya:
+
+```go
+const (
+    today string = "senin"
+    sekarang
+    isToday2 = true
+)
+```
+
+- `today` dideklarasikan dengan metode _manifest typing_ dengan tipe data **string** dan nilainya **"senin"**
+- `sekarang` dideklarasikan dengan metode _manifest typing_ dengan tipe data **string** dan nilainya **"senin"**
+- `isToday2` dideklarasikan dengan metode _type inference_ dengan tipe data **bool** dan nilainya **true**
+
+Berikut contoh deklrasi _multiple_ konstanta dalam satu baris:
+
+```go
+const satu, dua = 1, 2
+const three, four string = "tiga", "empat"
+```
+
+- `satu`, dideklarasikan dengan metode _type inference_ dengan tipe data **int** dan nilainya **1**
+- `dua`, dideklarasikan dengan metode _type inference_ dengan tipe data **int** dan nilainya **2**
+- `three`, dideklarasikan dengan metode _manifest typing_ dengan tipe data **string** dan nilainya **"tiga"**
+- `four`, dideklarasikan dengan metode _manifest typing_ dengan tipe data **string** dan nilainya **"empat"**
+
+# A.12. Operator
+
+Chapter ini membahas mengenai macam operator yang bisa digunakan di Go. Secara umum terdapat 3 kategori operator: aritmatika, perbandingan, dan logika.
+
+## A.12.1. Operator Aritmatika
+
+Operator aritmatika adalah operator yang digunakan untuk operasi yang sifatnya perhitungan. Go mendukung beberapa operator aritmatika standar, list-nya bisa dilihat di tabel berikut.
+
+| Tanda | Penjelasan                     |
+| :---: | :----------------------------- |
+|  `+`  | penjumlahan                    |
+|  `-`  | pengurangan                    |
+|  `*`  | perkalian                      |
+|  `/`  | pembagian                      |
+|  `%`  | modulus / sisa hasil pembagian |
+
+Contoh penggunaan:
+
+```go
+var value = (((2 + 6) % 3) * 4 - 2) / 3
+```
+
+## A.12.2. Operator Perbandingan
+
+Operator perbandingan digunakan untuk menentukan kebenaran suatu kondisi. Hasilnya berupa nilai boolean, `true` atau `false`.
+
+Tabel di bawah ini berisikan operator perbandingan yang bisa digunakan di Go.
+
+| Tanda | Penjelasan                                                     |
+| :---: | :------------------------------------------------------------- |
+| `==`  | apakah nilai kiri **sama dengan** nilai kanan                  |
+| `!=`  | apakah nilai kiri **tidak sama dengan** nilai kanan            |
+|  `<`  | apakah nilai kiri **lebih kecil daripada** nilai kanan         |
+| `<=`  | apakah nilai kiri **lebih kecil atau sama dengan** nilai kanan |
+|  `>`  | apakah nilai kiri **lebih besar dari** nilai kanan             |
+| `>=`  | apakah nilai kiri **lebih besar atau sama dengan** nilai kanan |
+
+Contoh penggunaan:
+
+```go
+var value = (((2 + 6) % 3) * 4 - 2) / 3
+var isEqual = (value == 2)
+
+fmt.Printf("nilai %d (%t) \n", value, isEqual)
+```
+
+Pada kode di atas, terdapat statement operasi aritmatika yang hasilnya ditampung oleh variabel `value`. Selanjutnya, variabel tersebut dibandingkan dengan angka **2** untuk dicek apakah nilainya sama. Jika iya, maka hasilnya adalah `true`, jika tidak maka `false`. Nilai hasil operasi perbandingan tersebut kemudian disimpan dalam variabel `isEqual`.
+
+![Penggunaan operator perbandingan](/assets/images//A_operator_1_operator_comparison.png)
+
+Untuk memunculkan nilai `bool` menggunakan `fmt.Printf()`, bisa gunakan layout format `%t`.
+
+## A.12.3. Operator Logika
+
+Operator ini digunakan untuk mencari benar tidaknya kombinasi data bertipe `bool` (bisa berupa variabel bertipe `bool`, atau hasil dari operator perbandingan).
+
+Beberapa operator logika standar yang bisa digunakan:
+
+|           Tanda           | Penjelasan               |
+| :-----------------------: | :----------------------- |
+|           `&&`            | kiri **dan** kanan       |
+| <code>&#124;&#124;</code> | kiri **atau** kanan      |
+|            `!`            | negasi / nilai kebalikan |
+
+Contoh penggunaan:
+
+```go
+var left = false
+var right = true
+
+var leftAndRight = left && right
+fmt.Printf("left && right \t(%t) \n", leftAndRight)
+
+var leftOrRight = left || right
+fmt.Printf("left || right \t(%t) \n", leftOrRight)
+
+var leftReverse = !left
+fmt.Printf("!left \t\t(%t) \n", leftReverse)
+```
+
+Hasil dari operator logika sama dengan hasil dari operator perbandingan, yaitu berupa boolean.
+
+![Penerapan operator logika](/assets/images//A_operator_2_operator_logical.png)
+
+Berikut penjelasan statemen operator logika pada kode di atas.
+
+- `leftAndRight` bernilai `false`, karena hasil dari `false` **dan** `true` adalah `false`.
+- `leftOrRight` bernilai `true`, karena hasil dari `false` **atau** `true` adalah `true`.
+- `leftReverse` bernilai `true`, karena **negasi** (atau lawan dari) `false` adalah `true`.
+
+Template `\t` digunakan untuk menambahkan indent tabulasi. Biasa dimanfaatkan untuk merapikan tampilan output pada console.
 
 sumber : https://github.com/novalagung/dasarpemrogramangolang
