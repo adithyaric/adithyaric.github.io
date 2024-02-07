@@ -33,8 +33,6 @@ Sudah banyak industri dan perusahaan yg menggunakan Go sampai level production, 
 
 ---
 
-Pada buku ini (terutama semua serial chapter A) kita akan belajar tentang dasar pemrograman Go, mulai dari 0, dan gratis.
-
 ![The Go Logo](/assets/images/A_introduction_1_logo.png)
 
 # A.2. Instalasi Golang (Stable & Unstable)
@@ -1048,4 +1046,986 @@ Berikut penjelasan statemen operator logika pada kode di atas.
 
 Template `\t` digunakan untuk menambahkan indent tabulasi. Biasa dimanfaatkan untuk merapikan tampilan output pada console.
 
-sumber : https://github.com/novalagung/dasarpemrogramangolang
+# A.13. Seleksi Kondisi
+
+Seleksi kondisi digunakan untuk mengontrol alur program. Analoginya mirip seperti fungsi rambu lalu lintas di jalan raya. Kapan kendaraan diperbolehkan melaju dan kapan harus berhenti diatur oleh rambu tersebut. Seleksi kondisi pada program juga kurang lebih sama, kapan sebuah blok kode akan dieksekusi dikontrol.
+
+Yang dijadikan acuan oleh seleksi kondisi adalah nilai bertipe `bool`, bisa berasal dari variabel, ataupun hasil operasi perbandingan. Nilai tersebut menentukan blok kode mana yang akan dieksekusi.
+
+Go memiliki 2 macam keyword untuk seleksi kondisi, yaitu **if else** dan **switch**. Pada chapter ini kita akan mempelajarinya satu-persatu.
+
+> Go tidak mendukung seleksi kondisi menggunakan **ternary**.<br />Statement seperti: `var data = (isExist ? "ada" : "tidak ada")` adalah invalid dan menghasilkan error.
+
+## A.13.1. Seleksi Kondisi Menggunakan Keyword `if`, `else if`, & `else`
+
+Cara penerapan if-else di Go sama seperti pada bahasa pemrograman lain. Yang membedakan hanya tanda kurungnya _(parentheses)_, di Go tidak perlu ditulis. Kode berikut merupakan contoh penerapan seleksi kondisi if else, dengan jumlah kondisi 4 buah.
+
+```go
+var point = 8
+
+if point == 10 {
+    fmt.Println("lulus dengan nilai sempurna")
+} else if point > 5 {
+    fmt.Println("lulus")
+} else if point == 4 {
+    fmt.Println("hampir lulus")
+} else {
+    fmt.Printf("tidak lulus. nilai anda %d\n", point)
+}
+```
+
+Dari ke-empat kondisi di atas, yang terpenuhi adalah `if point > 5`, karena nilai variabel `point` memang lebih besar dari `5`. Maka blok kode tepat di bawah kondisi tersebut akan dieksekusi (blok kode ditandai kurung kurawal buka dan tutup), hasilnya text `"lulus"` muncul sebagai output.
+
+![Seleksi kondisi `if` - `else`](/assets/images/A_seleksi_kondisi_1_if_else.png)
+
+Skema if else Go sama seperti pada pemrograman umumnya. Yaitu di awal seleksi kondisi menggunakan `if`, dan ketika kondisinya tidak terpenuhi akan menuju ke `else` (jika ada). Ketika ada banyak kondisi, gunakan `else if`.
+
+> Di bahasa pemrograman lain, ketika ada seleksi kondisi yang isi blok-nya hanya 1 baris saja, kurung kurawal boleh tidak dituliskan. Berbeda dengan aturan di Go, kurung kurawal harus tetap dituliskan meski isinya hanya 1 blok satement.
+
+## A.13.2. Variabel Temporary Pada `if` - `else`
+
+Variabel temporary adalah variabel yang hanya bisa digunakan pada blok seleksi kondisi di mana ia ditempatkan saja. Penggunaan variabel ini membawa beberapa manfaat, antara lain:
+
+- Scope atau cakupan variabel jelas, hanya bisa digunakan pada blok seleksi kondisi itu saja
+- Kode menjadi lebih rapi
+- Ketika nilai variabel tersebut didapat dari sebuah komputasi, perhitungan tidak perlu dilakukan di dalam blok masing-masing kondisi.
+
+```go
+var point = 8840.0
+
+if percent := point / 100; percent >= 100 {
+    fmt.Printf("%.1f%s perfect!\n", percent, "%")
+} else if percent >= 70 {
+    fmt.Printf("%.1f%s good\n", percent, "%")
+} else {
+    fmt.Printf("%.1f%s not bad\n", percent, "%")
+}
+```
+
+Variabel `percent` nilainya didapat dari hasil perhitungan, dan hanya bisa digunakan di deretan blok seleksi kondisi itu saja.
+
+> Deklarasi variabel temporary hanya bisa dilakukan lewat metode type inference yang menggunakan tanda `:=`. Penggunaan keyword `var` di situ tidak diperbolehkan karena akan menyebabkan error.
+
+## A.13.3. Seleksi Kondisi Menggunakan Keyword `switch` - `case`
+
+Switch merupakan seleksi kondisi yang sifatnya fokus pada satu variabel, lalu kemudian di-cek nilainya. Contoh sederhananya seperti penentuan apakah nilai variabel `x` adalah: `1`, `2`, `3`, atau lainnya.
+
+```go
+var point = 6
+
+switch point {
+case 8:
+    fmt.Println("perfect")
+case 7:
+    fmt.Println("awesome")
+default:
+    fmt.Println("not bad")
+}
+```
+
+Pada kode di atas, tidak ada kondisi atau `case` yang terpenuhi karena nilai variabel `point` tetap `6`. Ketika hal seperti ini terjadi, blok kondisi `default` dipanggil. Bisa dibilang bahwa `default` merupakan `else` dalam sebuah switch.
+
+Perlu diketahui, switch pada pemrograman Go memiliki perbedaan dibanding bahasa lain. Di Go, ketika sebuah case terpenuhi, tidak akan dilanjutkan ke pengecekan case selanjutnya, meskipun tidak ada keyword `break` di situ. Konsep ini berkebalikan dengan switch pada umumnya, yang ketika sebuah case terpenuhi, maka akan tetap dilanjut mengecek case selanjutnya kecuali ada keyword `break`.
+
+## A.13.4. Pemanfaatan `case` Untuk Banyak Kondisi
+
+Sebuah `case` dapat menampung banyak kondisi. Cara penerapannya yaitu dengan menuliskan nilai pembanding-pembanding variabel yang di-switch setelah keyword `case` dipisah tanda koma (`,`).
+
+```go
+var point = 6
+
+switch point {
+case 8:
+    fmt.Println("perfect")
+case 7, 6, 5, 4:
+    fmt.Println("awesome")
+default:
+    fmt.Println("not bad")
+}
+```
+
+Kondisi `case 7, 6, 5, 4:` akan terpenuhi ketika nilai variabel `point` adalah 7 atau 6 atau 5 atau 4.
+
+## A.13.5. Kurung Kurawal Pada Keyword `case` & `default`
+
+Tanda kurung kurawal (`{ }`) bisa diterapkan pada keyword `case` dan `default`. Tanda ini opsional, boleh dipakai boleh tidak. Bagus jika dipakai pada blok kondisi yang di dalamnya ada banyak statement, kode akan terlihat lebih rapi dan mudah di-maintain.
+
+Perhatikan kode berikut, bisa dilihat pada keyword `default` terdapat kurung kurawal yang mengapit 2 statement di dalamnya.
+
+```go
+var point = 6
+
+switch point {
+case 8:
+    fmt.Println("perfect")
+case 7, 6, 5, 4:
+    fmt.Println("awesome")
+default:
+    {
+        fmt.Println("not bad")
+        fmt.Println("you can be better!")
+    }
+}
+```
+
+## A.13.6. Switch Dengan Gaya `if` - `else`
+
+Uniknya di Go, switch bisa digunakan dengan gaya ala if-else. Nilai yang akan dibandingkan tidak dituliskan setelah keyword `switch`, melainkan akan ditulis langsung dalam bentuk perbandingan dalam keyword `case`.
+
+Pada kode di bawah ini, kode program switch di atas diubah ke dalam gaya `if-else`. Variabel `point` dihilangkan dari keyword `switch`, lalu kondisi-kondisinya dituliskan di tiap `case`.
+
+```go
+var point = 6
+
+switch {
+case point == 8:
+    fmt.Println("perfect")
+case (point < 8) && (point > 3):
+    fmt.Println("awesome")
+default:
+    {
+        fmt.Println("not bad")
+        fmt.Println("you need to learn more")
+    }
+}
+```
+
+## A.13.7. Penggunaan Keyword `fallthrough` Dalam `switch`
+
+Seperti yang sudah dijelaskan sebelumnya, bahwa switch pada Go memiliki perbedaan dengan bahasa lain. Ketika sebuah `case` terpenuhi, pengecekan kondisi tidak akan diteruskan ke case-case setelahnya.
+
+Keyword `fallthrough` digunakan untuk memaksa proses pengecekan diteruskan ke satu `case` selanjutnya dengan **tanpa menghiraukan nilai kondisinya**, jadi satu case di pengecekan selanjutnya tersebut selalu dianggap benar (meskipun aslinya adalah salah). Dalam sebuah `switch` lebih dari satu `fallthrough` bisa di tempatkan untuk memaksa melanjutkan proses pengecekan ke satu `case` setelahnya.
+
+```go
+var point = 6
+
+switch {
+case point == 8:
+    fmt.Println("perfect")
+case (point < 8) && (point > 3):
+    fmt.Println("awesome")
+    fallthrough
+case point < 5:
+    fmt.Println("you need to learn more")
+default:
+    {
+        fmt.Println("not bad")
+        fmt.Println("you need to learn more")
+    }
+}
+```
+
+Setelah pengecekan `case (point < 8) && (point > 3)` selesai, akan dilanjut ke pengecekan `case point < 5`, karena ada `fallthrough` di situ.
+
+![Penggunaan `fallthrough` dalam `switch`](/assets/images/A_seleksi_kondisi_2_fallthrough.png)
+
+## A.13.8. Seleksi Kondisi Bersarang
+
+Seleksi kondisi bersarang adalah seleksi kondisi, yang berada dalam seleksi kondisi, yang mungkin juga berada dalam seleksi kondisi, dan seterusnya. Seleksi kondisi bersarang bisa dilakukan pada `if` - `else`, `switch`, ataupun kombinasi keduanya.
+
+```go
+var point = 10
+
+if point > 7 {
+    switch point {
+    case 10:
+        fmt.Println("perfect!")
+    default:
+        fmt.Println("nice!")
+    }
+} else {
+    if point == 5 {
+        fmt.Println("not bad")
+    } else if point == 3 {
+        fmt.Println("keep trying")
+    } else {
+        fmt.Println("you can do it")
+        if point == 0 {
+            fmt.Println("try harder!")
+        }
+    }
+}
+```
+
+# A.14. Perulangan
+
+Perulangan adalah proses mengulang-ulang eksekusi blok kode tanpa henti, selama kondisi yang dijadikan acuan terpenuhi. Biasanya disiapkan variabel untuk iterasi atau variabel penanda kapan perulangan akan diberhentikan.
+
+Di Go keyword perulangan hanya **for** saja, tetapi meski demikian, kemampuannya merupakan gabungan `for`, `foreach`, dan `while` ibarat bahasa pemrograman lain.
+
+## A.14.1. Perulangan Menggunakan Keyword `for`
+
+Ada beberapa cara standar menggunakan `for`. Cara pertama dengan memasukkan variabel counter perulangan beserta kondisinya setelah keyword. Perhatikan dan praktekan kode berikut.
+
+```go
+for i := 0; i < 5; i++ {
+    fmt.Println("Angka", i)
+}
+```
+
+Perulangan di atas hanya akan berjalan ketika variabel `i` bernilai di bawah `5`, dengan ketentuan setiap kali perulangan, nilai variabel `i` akan di-iterasi atau ditambahkan 1 (`i++` artinya ditambah satu, sama seperti `i = i + 1`). Karena `i` pada awalnya bernilai 0, maka perulangan akan berlangsung 5 kali, yaitu ketika `i` bernilai 0, 1, 2, 3, dan 4.
+
+![Penggunaan `for`](/assets/images/A_perulangan_1_for.png)
+
+## A.14.2. Penggunaan Keyword `for` Dengan Argumen Hanya Kondisi
+
+Cara ke-2 adalah dengan menuliskan kondisi setelah keyword `for` (hanya kondisi). Deklarasi dan iterasi variabel counter tidak dituliskan setelah keyword, hanya kondisi perulangan saja. Konsepnya mirip seperti `while` milik bahasa pemrograman lain.
+
+Kode berikut adalah contoh `for` dengan argumen hanya kondisi (seperti `if`), output yang dihasilkan sama seperti penerapan `for` cara pertama.
+
+```go
+var i = 0
+
+for i < 5 {
+    fmt.Println("Angka", i)
+    i++
+}
+```
+
+## A.14.3. Penggunaan Keyword `for` Tanpa Argumen
+
+Cara ke-3 adalah `for` ditulis tanpa kondisi. Dengan ini akan dihasilkan perulangan tanpa henti (sama dengan `for true`). Pemberhentian perulangan dilakukan dengan menggunakan keyword `break`.
+
+```go
+var i = 0
+
+for {
+    fmt.Println("Angka", i)
+
+    i++
+    if i == 5 {
+        break
+    }
+}
+```
+
+Dalam perulangan tanpa henti di atas, variabel `i` yang nilai awalnya `0` di-inkrementasi. Ketika nilai `i` sudah mencapai `5`, keyword `break` digunakan, dan perulangan akan berhenti.
+
+## A.14.4. Penggunaan Keyword `for` - `range`
+
+Cara ke-4 adalah perulangan dengan menggunakan kombinasi keyword `for` dan `range`. Cara ini biasa digunakan untuk me-looping data gabungan (misalnya string, array, slice, map). Detailnya akan dibahas dalam chapter-chapter selanjutnya ([A.15. Array](/A-array.html), [A.16. Slice](/A-slice.html), [A.17. Map](/A-map.html)).
+
+```go
+var xs = "123" // string
+for i, v := range xs {
+    fmt.Println("Index=", i, "Value=", v)
+}
+
+var ys = [5]int{10, 20, 30, 40, 50} // array
+for _, v := range ys {
+    fmt.Println("Value=", v)
+}
+
+var zs = ys[0:2] // slice
+for _, v := range zs {
+    fmt.Println("Value=", v)
+}
+
+var kvs = map[byte]int{'a': 0, 'b': 1, 'c': 2} // map
+for k, v := range kvs {
+    fmt.Println("Key=", k, "Value=", v)
+}
+
+// boleh juga baik k dan atau v nya diabaikan
+for range kvs {
+    fmt.Println("Done")
+}
+```
+
+## A.14.5. Penggunaan Keyword `break` & `continue`
+
+Keyword `break` digunakan untuk menghentikan secara paksa sebuah perulangan, sedangkan `continue` dipakai untuk memaksa maju ke perulangan berikutnya.
+
+Berikut merupakan contoh penerapan `continue` dan `break`. Kedua keyword tersebut dimanfaatkan untuk menampilkan angka genap berurutan yang lebih besar dari 0 dan kurang dari atau sama dengan 8.
+
+```go
+for i := 1; i <= 10; i++ {
+    if i % 2 == 1 {
+        continue
+    }
+
+    if i > 8 {
+        break
+    }
+
+    fmt.Println("Angka", i)
+}
+```
+
+Kode di atas akan lebih mudah dicerna jika dijelaskan secara berurutan. Berikut adalah penjelasannya.
+
+1.  Dilakukan perulangan mulai angka 1 hingga 10 dengan `i` sebagai variabel iterasi.
+2.  Ketika `i` adalah ganjil (dapat diketahui dari `i % 2`, jika hasilnya `1`, berarti ganjil), maka akan dipaksa lanjut ke perulangan berikutnya.
+3.  Ketika `i` lebih besar dari 8, maka perulangan akan berhenti.
+4.  Nilai `i` ditampilkan.
+
+![Penerapan keyword `for`, `break`, dan `continue`](/assets/images/A_perulangan_2_for_break_continue.png)
+
+## A.14.6. Perulangan Bersarang
+
+Tak hanya seleksi kondisi yang bisa bersarang, perulangan juga bisa. Cara pengaplikasiannya kurang lebih sama, tinggal tulis blok statement perulangan di dalam perulangan.
+
+```go
+for i := 0; i < 5; i++ {
+    for j := i; j < 5; j++ {
+        fmt.Print(j, " ")
+    }
+
+    fmt.Println()
+}
+```
+
+Pada kode di atas, untuk pertama kalinya fungsi `fmt.Println()` dipanggil tanpa disisipkan parameter. Cara seperti ini bisa digunakan untuk menampilkan baris baru. Kegunaannya sama seperti output dari statement `fmt.Print("\n")`.
+
+![Perulangan bersarang](/assets/images/A_perulangan_3_nested_for.png)
+
+## A.14.7. Pemanfaatan Label Dalam Perulangan
+
+Di perulangan bersarang, `break` dan `continue` akan berlaku pada blok perulangan di mana ia digunakan saja. Ada cara agar kedua keyword ini bisa tertuju pada perulangan terluar atau perulangan tertentu, yaitu dengan memanfaatkan teknik pemberian **label**.
+
+Program untuk memunculkan matriks berikut merupakan contoh penerapan label perulangan.
+
+```go
+outerLoop:
+for i := 0; i < 5; i++ {
+    for j := 0; j < 5; j++ {
+        if i == 3 {
+            break outerLoop
+        }
+        fmt.Print("matriks [", i, "][", j, "]", "\n")
+    }
+}
+```
+
+Tepat sebelum keyword `for` terluar, terdapat baris kode `outerLoop:`. Maksud dari kode tersebut adalah disiapkan sebuah label bernama `outerLoop` untuk `for` di bawahnya. Nama label bisa diganti dengan nama lain (dan harus diakhiri dengan tanda titik dua atau _colon_ (`:`) ).
+
+Pada `for` bagian dalam, terdapat seleksi kondisi untuk pengecekan nilai `i`. Ketika nilai tersebut sama dengan `3`, maka `break` dipanggil dengan target adalah perulangan yang dilabeli `outerLoop`, perulangan tersebut akan dihentikan.
+
+![Penerapan label dalam perulangan](/assets/images/A_perulangan_4_for_label.png)
+
+# A.15. Array
+
+Array adalah kumpulan data bertipe sama, yang disimpan dalam sebuah variabel. Array memiliki kapasitas yang nilainya ditentukan pada saat pembuatan, menjadikan elemen/data yang disimpan di array tersebut jumlahnya tidak boleh melebihi yang sudah dialokasikan. Default nilai tiap elemen array pada awalnya tergantung dari tipe datanya. Jika `int` maka tiap element zero value-nya adalah `0`, jika `bool` maka `false`, dan seterusnya. Setiap elemen array memiliki indeks berupa angka yang merepresentasikan posisi urutan elemen tersebut. Indeks array dimulai dari 0.
+
+Contoh penerapan array:
+
+```go
+var names [4]string
+names[0] = "trafalgar"
+names[1] = "d"
+names[2] = "water"
+names[3] = "law"
+
+fmt.Println(names[0], names[1], names[2], names[3])
+```
+
+Variabel `names` dideklarasikan sebagai `array string` dengan alokasi elemen `4` slot. Cara mengisi slot elemen array bisa dilihat di kode di atas, yaitu dengan langsung mengakses elemen menggunakan indeks, lalu mengisinya.
+
+![Menampilkan elemen array](/assets/images/A_array_0_array.png)
+
+## A.15.1. Pengisian Elemen Array yang Melebihi Alokasi Awal
+
+Pengisian elemen array pada indeks yang tidak sesuai dengan alokasi menghasilkan error. Contoh sederhana, jika array memiliki 4 slot, maka pengisian nilai slot 5 seterusnya adalah tidak valid.
+
+```go
+var names [4]string
+names[0] = "trafalgar"
+names[1] = "d"
+names[2] = "water"
+names[3] = "law"
+names[4] = "ez" // baris kode ini menghasilkan error
+```
+
+Solusi dari masalah di atas adalah dengan menggunakan keyword `append`, yang nantinya pada chapter selanjutnya ([A.16. Slice](/A-slice.html)) akan kita bahas.
+
+## A.15.2. Inisialisasi Nilai Awal Array
+
+Pengisian elemen array bisa dilakukan pada saat deklarasi variabel. Caranya dengan menuliskan data elemen dalam kurung kurawal setelah tipe data, dengan pembatas antar elemen adalah tanda koma (`,`).
+
+```go
+var fruits = [4]string{"apple", "grape", "banana", "melon"}
+
+fmt.Println("Jumlah element \t\t", len(fruits))
+fmt.Println("Isi semua element \t", fruits)
+```
+
+Penggunaan fungsi `fmt.Println()` pada data array tanpa mengakses indeks tertentu, akan menghasilkan output dalam bentuk string dari semua array yang ada. Teknik ini biasa digunakan untuk _debugging_ data array.
+
+![Menghitung jumlah elemen dan menampilkan isi array](/assets/images/A_array_1_array_initialization_and_len.png)
+
+Fungsi `len()` dipakai untuk menghitung jumlah elemen sebuah array.
+
+## A.15.3. Inisialisasi Nilai Array Dengan Gaya Vertikal
+
+Elemen array bisa dituliskan dalam bentuk horizontal (seperti yang sudah dicontohkan di atas) ataupun dalam bentuk vertikal.
+
+```go
+var fruits [4]string
+
+// cara horizontal
+fruits  = [4]string{"apple", "grape", "banana", "melon"}
+
+// cara vertikal
+fruits  = [4]string{
+    "apple",
+    "grape",
+    "banana",
+    "melon",
+}
+```
+
+Khusus untuk deklarasi array dengan cara vertikal, tanda koma wajib dituliskan setelah elemen, termasuk elemen terakhir. Jika tidak, maka akan muncul error.
+
+## A.15.4. Inisialisasi Nilai Awal Array Tanpa Jumlah Elemen
+
+Deklarasi array yang nilainya diset di awal, boleh tidak dituliskan jumlah lebar array-nya, cukup ganti dengan tanda 3 titik (`...`). Jumlah elemen akan di kalkulasi secara otomatis menyesuaikan data elemen yang diisikan.
+
+```go
+var numbers = [...]int{2, 3, 2, 4, 3}
+
+fmt.Println("data array \t:", numbers)
+fmt.Println("jumlah elemen \t:", len(numbers))
+```
+
+Variabel `numbers` akan secara otomatis memiliki jumlah elemen `5`, karena pada saat deklarasi disiapkan 5 buah elemen.
+
+![Deklarasi array menggunakan tanda 3 titik](/assets/images/A_array_1_1_array_dots.png)
+
+## A.15.5. Array Multidimensi
+
+Array multidimensi adalah array yang tiap elemennya juga berupa array (dan bisa seterusnya, tergantung ke dalaman dimensinya).
+
+Cara deklarasi array multidimensi secara umum sama dengan cara deklarasi array biasa, dengan cara menuliskan data array dimensi selanjutnya sebagai elemen array dimensi sebelumnya.
+
+Khusus untuk array yang merupakan sub dimensi atau elemen, boleh tidak dituliskan jumlah datanya. Contohnya bisa dilihat pada deklarasi variabel `numbers2` di kode berikut.
+
+```go
+var numbers1 = [2][3]int{[3]int{3, 2, 3}, [3]int{3, 4, 5}}
+var numbers2 = [2][3]int{{3, 2, 3}, {3, 4, 5}}
+
+fmt.Println("numbers1", numbers1)
+fmt.Println("numbers2", numbers2)
+```
+
+Kedua array di atas memiliki elemen yang sama.
+
+![Array multidimensi](/assets/images/A_array_2_array_multidimension.png)
+
+## A.15.6. Perulangan Elemen Array Menggunakan Keyword `for`
+
+Keyword `for` dan array memiliki hubungan yang sangat erat. Dengan memanfaatkan perulangan menggunakan keyword ini, elemen-elemen dalam array bisa didapat.
+
+Ada beberapa cara yang bisa digunakan untuk me-looping data array, yg pertama adalah dengan memanfaatkan variabel iterasi perulangan untuk mengakses elemen berdasarkan indeks-nya. Contoh:
+
+```go
+var fruits = [4]string{"apple", "grape", "banana", "melon"}
+
+for i := 0; i < len(fruits); i++ {
+    fmt.Printf("elemen %d : %s\n", i, fruits[i])
+}
+```
+
+Perulangan di atas dijalankan sebanyak jumlah elemen array `fruits` (bisa diketahui dari kondisi `i < len(fruits`). Di tiap perulangan, elemen array diakses lewat variabel iterasi `i`.
+
+![Iterasi elemen array](/assets/images/A_array_3_for_range.png)
+
+## A.15.7. Perulangan Elemen Array Menggunakan Keyword `for` - `range`
+
+Ada cara yang lebih sederhana me-looping data array, dengan menggunakan keyword `for` - `range`. Contoh pengaplikasiannya bisa dilihat di kode berikut.
+
+```go
+var fruits = [4]string{"apple", "grape", "banana", "melon"}
+
+for i, fruit := range fruits {
+    fmt.Printf("elemen %d : %s\n", i, fruit)
+}
+```
+
+Array `fruits` diambil elemen-nya secara berurutan. Nilai tiap elemen ditampung variabel oleh `fruit` (tanpa huruf s), sedangkan indeks nya ditampung variabel `i`.
+
+Output program di atas, sama dengan output program sebelumnya, hanya cara yang digunakan berbeda.
+
+## A.15.8. Penggunaan Variabel Underscore `_` Dalam `for` - `range`
+
+Kadang kala ketika _looping_ menggunakan `for` - `range`, ada kemungkinan di mana data yang dibutuhkan adalah elemen-nya saja, indeks-nya tidak. Sedangkan kode di atas, `range` mengembalikan 2 data, yaitu indeks dan elemen.
+
+Seperti yang sudah diketahui, bahwa di Go tidak memperbolehkan adanya variabel yang menganggur atau tidak dipakai. Jika dipaksakan, error akan muncul, contohnya seperti kode berikut.
+
+```go
+var fruits = [4]string{"apple", "grape", "banana", "melon"}
+
+for i, fruit := range fruits {
+    fmt.Printf("nama buah : %s\n", fruit)
+}
+```
+
+Hasil dari kode program di atas:
+
+![Error karena ada variabel yang tidak digunakan](/assets/images/A_array_4_for_range_error.png)
+
+Di sinilah salah satu kegunaan variabel pengangguran, atau underscore (`_`). Tampung saja nilai yang tidak ingin digunakan ke underscore.
+
+```go
+var fruits = [4]string{"apple", "grape", "banana", "melon"}
+
+for _, fruit := range fruits {
+    fmt.Printf("nama buah : %s\n", fruit)
+}
+```
+
+Pada kode di atas, yang sebelumnya adalah variabel `i` diganti dengan `_`, karena kebetulan variabel `i` tidak digunakan.
+
+![For range tanpa indeks](/assets/images/A_array_5_for_range_underscore.png)
+
+Jika yang dibutuhkan hanya indeks elemen-nya saja, bisa gunakan 1 buah variabel setelah keyword `for`.
+
+```go
+for i, _ := range fruits { }
+// atau
+for i := range fruits { }
+```
+
+## A.15.9. Alokasi Elemen Array Menggunakan Keyword `make`
+
+Deklarasi sekaligus alokasi data array juga bisa dilakukan lewat keyword `make`.
+
+```go
+var fruits = make([]string, 2)
+fruits[0] = "apple"
+fruits[1] = "manggo"
+
+fmt.Println(fruits)  // [apple manggo]
+```
+
+Parameter pertama keyword `make` diisi dengan tipe data elemen array yang diinginkan, parameter kedua adalah jumlah elemennya. Pada kode di atas, variabel `fruits` tercetak sebagai array string dengan alokasi 2 slot.
+
+# A.16. Slice
+
+**Slice** adalah _reference_ elemen array. Slice bisa dibuat, atau bisa juga dihasilkan dari manipulasi sebuah array ataupun slice lainnya. Karena merupakan data _reference_, menjadikan perubahan data di tiap elemen slice akan berdampak pada slice lain yang memiliki alamat memori yang sama.
+
+## A.16.1. Inisialisasi Slice
+
+Cara pembuatan slice mirip seperti pembuatan array, bedanya tidak perlu mendefinisikan jumlah elemen ketika awal deklarasi. Pengaksesan nilai elemen-nya juga sama. Contoh pembuatan slice:
+
+```go
+var fruits = []string{"apple", "grape", "banana", "melon"}
+fmt.Println(fruits[0]) // "apple"
+```
+
+Salah satu perbedaan slice dan array bisa diketahui pada saat deklarasi variabel-nya, jika jumlah elemen tidak dituliskan, maka variabel tersebut adalah slice.
+
+```go
+var fruitsA = []string{"apple", "grape"}      // slice
+var fruitsB = [2]string{"banana", "melon"}    // array
+var fruitsC = [...]string{"papaya", "grape"}  // array
+```
+
+## A.16.2. Hubungan Slice Dengan Array & Operasi Slice
+
+Kalau perbedannya hanya di penentuan alokasi pada saat inisialisasi, kenapa tidak menggunakan satu istilah saja? atau adakah perbedaan lainnya?
+
+Sebenarnya slice dan array tidak bisa dibedakan karena merupakan sebuah kesatuan. Array adalah kumpulan nilai atau elemen, sedang slice adalah referensi tiap elemen tersebut.
+
+Slice bisa dibentuk dari array yang sudah didefinisikan, caranya dengan memanfaatkan teknik **2 index** untuk mengambil elemen-nya. Contoh bisa dilihat pada kode berikut.
+
+```go
+var fruits = []string{"apple", "grape", "banana", "melon"}
+var newFruits = fruits[0:2]
+
+fmt.Println(newFruits) // ["apple", "grape"]
+```
+
+Kode `fruits[0:2]` maksudnya adalah pengaksesan elemen dalam slice `fruits` yang **dimulai dari indeks ke-0, hingga elemen sebelum indeks ke-2**. Elemen yang memenuhi kriteria tersebut akan didapat, untuk kemudian disimpan pada variabel lain sebagai slice baru. Pada contoh di atas, `newFruits` adalah slice baru yang tercetak dari slice `fruits`, dengan isi 2 elemen, yaitu `"apple"` dan `"grape"`.
+
+![Memanfaatkan sebuah slice untuk membentuk slice baru/](/assets/images/A_slice_1_array_index.png)
+
+Ketika mengakses elemen array menggunakan satu buah indeks (seperti `data[2]`), nilai yang didapat merupakan hasil **copy** dari referensi aslinya. Berbeda dengan pengaksesan elemen menggunakan 2 indeks (seperti `data[0:2]`), nilai yang didapat adalah _reference_ elemen atau slice.
+
+> Tidak apa jikalau pembaca masih bingung, di bawah akan dijelaskan lebih mendetail lagi tentang slice dan _reference_
+
+Tabel berikut adalah list operasi operasi menggunakan teknik 2 indeks yang bisa dilakukan.
+
+```go
+var fruits = []string{"apple", "grape", "banana", "melon"}
+```
+
+| Kode          | Output                                                    | Penjelasan                                                                           |
+| :------------ | :-------------------------------------------------------- | :----------------------------------------------------------------------------------- |
+| `fruits[0:2]` | `[apple, grape]`                                          | semua elemen mulai indeks ke-0, hingga sebelum indeks ke-2                           |
+| `fruits[0:4]` | <code>[apple,&nbsp;grape,&nbsp;banana,&nbsp;melon]</code> | semua elemen mulai indeks ke-0, hingga sebelum indeks ke-4                           |
+| `fruits[0:0]` | `[]`                                                      | menghasilkan slice kosong, karena tidak ada elemen sebelum indeks ke-0               |
+| `fruits[4:4]` | `[]`                                                      | menghasilkan slice kosong, karena tidak ada elemen yang dimulai dari indeks ke-4     |
+| `fruits[4:0]` | `[]`                                                      | error, pada penulisan `fruits[a:b]` nilai `a` harus lebih kecil atau sama dengan `b` |
+| `fruits[:]`   | `[apple, grape, banana, melon]`                           | semua elemen                                                                         |
+| `fruits[2:]`  | `[banana, melon]`                                         | semua elemen mulai indeks ke-2                                                       |
+| `fruits[:2]`  | `[apple, grape]`                                          | semua elemen hingga sebelum indeks ke-2                                              |
+
+## A.16.3. Slice Merupakan Tipe Data Reference
+
+Slice merupakan tipe data _reference_ atau referensi. Artinya jika ada slice baru yang terbentuk dari slice lama, maka data elemen slice yang baru akan memiliki alamat memori yang sama dengan elemen slice lama. Setiap perubahan yang terjadi di elemen slice baru, akan berdampak juga pada elemen slice lama yang memiliki referensi yang sama.
+
+Program berikut merupakan pembuktian tentang teori yang baru kita bahas. Kita akan mencoba mengubah data elemen slice baru, yang terbentuk dari slice lama.
+
+```go
+var fruits = []string{"apple", "grape", "banana", "melon"}
+
+var aFruits = fruits[0:3]
+var bFruits = fruits[1:4]
+
+var aaFruits = aFruits[1:2]
+var baFruits = bFruits[0:1]
+
+fmt.Println(fruits)   // [apple grape banana melon]
+fmt.Println(aFruits)  // [apple grape banana]
+fmt.Println(bFruits)  // [grape banana melon]
+fmt.Println(aaFruits) // [grape]
+fmt.Println(baFruits) // [grape]
+
+// Buah "grape" diubah menjadi "pinnaple"
+baFruits[0] = "pinnaple"
+
+fmt.Println(fruits)   // [apple pinnaple banana melon]
+fmt.Println(aFruits)  // [apple pinnaple banana]
+fmt.Println(bFruits)  // [pinnaple banana melon]
+fmt.Println(aaFruits) // [pinnaple]
+fmt.Println(baFruits) // [pinnaple]
+```
+
+Sekilas bisa kita lihat bahwa setelah slice yang isi datanya adalah `grape` di-ubah menjadi `pinnaple`, semua slice pada 4 variabel lainnya juga ikut berubah.
+
+Variabel `aFruits`, `bFruits` merupakan slice baru yang terbentuk dari variabel `fruits`. Dengan menggunakan dua slice baru tersebut, diciptakan lagi slice lainnya, yaitu `aaFruits`, dan `baFruits`. Kelima slice tersebut ditampilkan nilainya.
+
+Selanjutnya, nilai dari `baFruits[0]` diubah, dan 5 slice tadi ditampilkan lagi. Hasilnya akan ada banyak slice yang elemennya ikut berubah. Yaitu elemen-elemen yang referensi-nya sama dengan referensi elemen `baFruits[0]`.
+
+![Perubahan data elemen slice berpengaruh pada slice lain](/assets/images/A_slice_2_slice_reference.png)
+
+Bisa dilihat pada output di atas, elemen yang sebelumnya bernilai `"grape"` pada variabel `fruits`, `aFruits`, `bFruits`, `aaFruits`, dan `baFruits`; Seluruhnya berubah menjadi `"pinnaple"`, karena memiliki referensi yang sama.
+
+---
+
+Pembahasan mengenai dasar slice sepertinya sudah cukup, selanjutnya kita akan membahas tentang beberapa _built in function_ bawaan Go, yang bisa dimanfaatkan untuk keperluan operasi slice.
+
+## A.16.4. Fungsi `len()`
+
+Fungsi `len()` digunakan untuk menghitung jumlah elemen slice yang ada. Sebagai contoh jika sebuah variabel adalah slice dengan data 4 buah, maka fungsi ini pada variabel tersebut akan mengembalikan angka **4**.
+
+```go
+var fruits = []string{"apple", "grape", "banana", "melon"}
+fmt.Println(len(fruits)) // 4
+```
+
+## A.16.5. Fungsi `cap()`
+
+Fungsi `cap()` digunakan untuk menghitung lebar atau kapasitas maksimum slice. Nilai kembalian fungsi ini untuk slice yang baru dibuat pasti sama dengan `len`, tapi bisa berubah seiring operasi slice yang dilakukan. Agar lebih jelas, silakan disimak kode berikut.
+
+```go
+var fruits = []string{"apple", "grape", "banana", "melon"}
+fmt.Println(len(fruits))  // len: 4
+fmt.Println(cap(fruits))  // cap: 4
+
+var aFruits = fruits[0:3]
+fmt.Println(len(aFruits)) // len: 3
+fmt.Println(cap(aFruits)) // cap: 4
+
+var bFruits = fruits[1:4]
+fmt.Println(len(bFruits)) // len: 3
+fmt.Println(cap(bFruits)) // cap: 3
+```
+
+Variabel `fruits` disiapkan di awal dengan jumlah elemen 4, fungsi `len(fruits)` dan `cap(fruits)` pasti hasinya 4.
+
+Variabel `aFruits` dan `bFruits` merupakan slice baru berisikan 3 buah elemen milik slice `fruits`. Variabel `aFruits` mengambil elemen index 0, 1, 2; sedangkan `bFruits` 1, 2, 3.
+
+Fungsi `len()` menghasilkan angka 3, karena jumlah elemen kedua slice ini adalah 3. Tetapi `cap(aFruits)` menghasilkan angka yang berbeda, yaitu 4 untuk `aFruits` dan 3 untuk `bFruits`. kenapa? jawabannya bisa dilihat pada tabel berikut.
+
+| Kode           | Output                            | `len()` | `cap()` |
+| :------------- | :-------------------------------- | :-----: | :-----: |
+| `fruits[0:4]`  | [**`buah` `buah` `buah` `buah`**] |    4    |    4    |
+| `aFruits[0:3]` | [**`buah` `buah` `buah`** `----`] |    3    |    4    |
+| `bFruits[1:4]` | `----` [**`buah` `buah` `buah`**] |    3    |    3    |
+
+Kita analogikan slicing 2 index menggunakan **x** dan **y**.
+
+```go
+fruits[x:y]
+```
+
+**Slicing** yang dimulai dari indeks **0** hingga **y** akan mengembalikan elemen-elemen mulai indeks **0** hingga sebelum indeks **y**, dengan lebar kapasitas adalah sama dengan slice aslinya.
+
+Sedangkan slicing yang dimulai dari indeks **x**, yang di mana nilai **x** adalah lebih dari **0**, membuat elemen ke-**x** slice yang diambil menjadi elemen ke-0 slice baru. Hal inilah yang membuat kapasitas slice berubah.
+
+## A.16.6. Fungsi `append()`
+
+Fungsi `append()` digunakan untuk menambahkan elemen pada slice. Elemen baru tersebut diposisikan setelah indeks paling akhir. Nilai balik fungsi ini adalah slice yang sudah ditambahkan nilai barunya. Contoh penggunaannya bisa dilihat di kode berikut.
+
+```go
+var fruits = []string{"apple", "grape", "banana"}
+var cFruits = append(fruits, "papaya")
+
+fmt.Println(fruits)  // ["apple", "grape", "banana"]
+fmt.Println(cFruits) // ["apple", "grape", "banana", "papaya"]
+```
+
+Ada 3 hal yang perlu diketahui dalam penggunaan fungsi ini.
+
+- Ketika jumlah elemen dan lebar kapasitas adalah sama (`len(fruits) == cap(fruits)`), maka elemen baru hasil `append()` merupakan referensi baru.
+- Ketika jumlah elemen lebih kecil dibanding kapasitas (`len(fruits) < cap(fruits)`), elemen baru tersebut ditempatkan ke dalam cakupan kapasitas, menjadikan semua elemen slice lain yang referensi-nya sama akan berubah nilainya.
+
+Agar lebih jelas silakan perhatikan contoh berikut.
+
+```go
+var fruits = []string{"apple", "grape", "banana"}
+var bFruits = fruits[0:2]
+
+fmt.Println(cap(bFruits)) // 3
+fmt.Println(len(bFruits)) // 2
+
+fmt.Println(fruits)  // ["apple", "grape", "banana"]
+fmt.Println(bFruits) // ["apple", "grape"]
+
+var cFruits = append(bFruits, "papaya")
+
+fmt.Println(fruits)  // ["apple", "grape", "papaya"]
+fmt.Println(bFruits) // ["apple", "grape"]
+fmt.Println(cFruits) // ["apple", "grape", "papaya"]
+```
+
+Pada contoh di atas bisa dilihat, elemen indeks ke-2 slice `fruits` nilainya berubah setelah ada penggunaan keyword `append()` pada `bFruits`. Slice `bFruits` kapasitasnya adalah **3** sedang jumlah datanya hanya **2**. Karena `len(bFruits) < cap(bFruits)`, maka elemen baru yang dihasilkan, terdeteksi sebagai perubahan nilai pada referensi yang lama (referensi elemen indeks ke-2 slice `fruits`), membuat elemen yang referensinya sama, nilainya berubah.
+
+## A.16.7. Fungsi `copy()`
+
+Fungsi `copy()` digunakan untuk men-copy elements slice pada `src` (parameter ke-2), ke `dst` (parameter pertama).
+
+```go
+copy(dst, src)
+```
+
+Jumlah element yang di-copy dari `src` adalah sejumlah lebar slice `dst` (atau `len(dst)`). Jika jumlah slice pada `src` lebih kecil dari `dst`, maka akan ter-copy semua. Lebih jelasnya silakan perhatikan contoh berikut.
+
+```go
+dst := make([]string, 3)
+src := []string{"watermelon", "pinnaple", "apple", "orange"}
+n := copy(dst, src)
+
+fmt.Println(dst) // watermelon pinnaple apple
+fmt.Println(src) // watermelon pinnaple apple orange
+fmt.Println(n)   // 3
+```
+
+Pada kode di atas variabel slice `dst` dipersiapkan dengan lebar adalah 3 elements. Slice `src` yang isinya 4 elements, di-copy ke `dst`. Menjadikan isi slice `dst` sekarang adalah 3 buah elements yang sama dengan 3 buah elements `src`, hasil dari operasi `copy()`.
+
+Yang ter-copy hanya 3 buah (meski `src` memiliki 4 elements) hal ini karena `copy()` hanya meng-copy elements sebanyak `len(dst)`.
+
+> Fungsi `copy()` mengembalikan informasi angka, representasi dari jumlah element yang berhasil di-copy.
+
+Pada contoh kedua berikut, `dst` merupakan slice yang sudah ada isinya, 3 buah elements. Variabel `src` yang juga merupakan slice dengan isi dua elements, di-copy ke `dst`. Karena operasi `copy()` akan meng-copy sejumlah `len(dst)`, maka semua elements `src` akan ter-copy **karena jumlahnya di bawah atau sama dengan lebar** `dst`.
+
+```go
+dst := []string{"potato", "potato", "potato"}
+src := []string{"watermelon", "pinnaple"}
+n := copy(dst, src)
+
+fmt.Println(dst) // watermelon pinnaple potato
+fmt.Println(src) // watermelon pinnaple
+fmt.Println(n)   // 2
+```
+
+Jika dilihat pada kode di atas, isi `dst` masih tetap 3 elements, tapi dua elements pertama adalah sama dengan `src`. Element terakhir `dst` isinya tidak berubah, tetap `potato`, hal ini karena proses copy hanya memutasi element ke-1 dan ke-2 milik `dst`, karena memang pada `src` hanya dua itu elements-nya.
+
+## A.16.8. Pengaksesan Elemen Slice Dengan 3 Indeks
+
+**3 index** adalah teknik slicing elemen yang sekaligus menentukan kapasitasnya. Cara menggunakannnya yaitu dengan menyisipkan angka kapasitas di belakang, seperti `fruits[0:1:1]`. Angka kapasitas yang diisikan tidak boleh melebihi kapasitas slice yang akan di slicing.
+
+Berikut merupakan contoh penerapannya.
+
+```go
+var fruits = []string{"apple", "grape", "banana"}
+var aFruits = fruits[0:2]
+var bFruits = fruits[0:2:2]
+
+fmt.Println(fruits)      // ["apple", "grape", "banana"]
+fmt.Println(len(fruits)) // len: 3
+fmt.Println(cap(fruits)) // cap: 3
+
+fmt.Println(aFruits)      // ["apple", "grape"]
+fmt.Println(len(aFruits)) // len: 2
+fmt.Println(cap(aFruits)) // cap: 3
+
+fmt.Println(bFruits)      // ["apple", "grape"]
+fmt.Println(len(bFruits)) // len: 2
+fmt.Println(cap(bFruits)) // cap: 2
+```
+
+# A.17. Map
+
+**Map** adalah tipe data asosiatif yang ada di Go, berbentuk _key-value pair_. Untuk setiap data (atau value) yang disimpan, disiapkan juga key-nya. Key harus unik, karena digunakan sebagai penanda (atau identifier) untuk pengaksesan value yang bersangkutan.
+
+Kalau dilihat, `map` mirip seperti slice, hanya saja indeks yang digunakan untuk pengaksesan bisa ditentukan sendiri tipe-nya (indeks tersebut adalah key).
+
+## A.17.1. Penggunaan Map
+
+Cara menggunakan map cukup dengan menuliskan keyword `map` diikuti tipe data key dan value-nya. Agar lebih mudah dipahami, silakan perhatikan contoh di bawah ini.
+
+```go
+var chicken map[string]int
+chicken = map[string]int{}
+
+chicken["januari"] = 50
+chicken["februari"] = 40
+
+fmt.Println("januari", chicken["januari"]) // januari 50
+fmt.Println("mei",     chicken["mei"])     // mei 0
+```
+
+Variabel `chicken` dideklarasikan sebagai map, dengan tipe data key adalah `string` dan value-nya `int`. Dari kode tersebut bisa dilihat bagaimana cara penggunaan keyword `map`.
+
+Kode `map[string]int` maknanya adalah, tipe data `map` dengan key bertipe `string` dan value bertipe `int`.
+
+Default nilai variabel `map` adalah `nil`. Oleh karena itu perlu dilakukan inisialisasi nilai default di awal, caranya cukup dengan tambahkan kurung kurawal pada akhir tipe, contoh seperti pada kode di atas: `map[string]int{}`.
+
+Cara menge-set nilai pada sebuah map adalah dengan menuliskan variabel-nya, kemudian disisipkan `key` pada kurung siku variabel (mirip seperti cara pengaksesan elemen slice), lalu isi nilainya. Contohnya seperti `chicken["februari"] = 40`. Sedangkan cara pengambilan value adalah cukup dengan menyisipkan `key` pada kurung siku variabel.
+
+Pengisian data pada map bersifat **overwrite**, ketika variabel sudah memiliki item dengan key yang sama, maka value lama akan ditimpa dengan value baru.
+
+![Pengaksesan data map](/assets/images/A_map_1_map_set_get.png)
+
+Pada pengaksesan item menggunakan key yang belum tersimpan di map, akan dikembalikan nilai default tipe data value-nya. Contohnya seperti pada kode di atas, `chicken["mei"]` menghasilkan nilai 0 (nilai default tipe `int`), karena belum ada item yang tersimpan menggunakan key `"mei"`.
+
+## A.17.2. Inisialisasi Nilai Map
+
+Zero value dari map adalah `nil`, maka tiap variabel bertipe map harus di-inisialisasi secara explisit nilai awalnya (agar tidak `nil`).
+
+```go
+var data map[string]int
+data["one"] = 1
+// akan muncul error!
+
+data = map[string]int{}
+data["one"] = 1
+// tidak ada error
+```
+
+Nilai variabel bertipe map bisa didefinisikan di awal, caranya dengan menambahkan kurung kurawal setelah tipe data, lalu menuliskan key dan value di dalamnya. Cara ini sekilas mirip dengan definisi nilai array/slice namun dalam bentuk key-value.
+
+```go
+// cara horizontal
+var chicken1 = map[string]int{"januari": 50, "februari": 40}
+
+// cara vertical
+var chicken2 = map[string]int{
+    "januari":  50,
+    "februari": 40,
+}
+```
+
+Key dan value dituliskan dengan pembatas tanda titik dua (`:`). Sedangkan tiap itemnya dituliskan dengan pembatas tanda koma (`,`). Khusus deklarasi dengan gaya vertikal, tanda koma perlu dituliskan setelah item terakhir.
+
+Variabel `map` bisa di-inisialisasi dengan tanpa nilai awal, caranya menggunakan tanda kurung kurawal, contoh: `map[string]int{}`. Atau bisa juga dengan menggunakan keyword `make` dan `new`. Contohnya bisa dilihat pada kode berikut. Ketiga cara di bawah ini intinya adalah sama.
+
+```go
+var chicken3 = map[string]int{}
+var chicken4 = make(map[string]int)
+var chicken5 = *new(map[string]int)
+```
+
+Khusus inisialisasi data menggunakan keyword `new`, yang dihasilkan adalah data pointer. Untuk mengambil nilai aslinya bisa dengan menggunakan tanda asterisk (`*`). Topik pointer akan dibahas lebih detail ketika sudah masuk [A.23. Pointer](/A-pointer.html).
+
+## A.17.3. Iterasi Item Map Menggunakan `for` - `range`
+
+Item variabel `map` bisa di iterasi menggunakan `for` - `range`. Cara penerapannya masih sama seperti pada slice, pembedanya data yang dikembalikan di tiap perulangan adalah key dan value, bukan indeks dan elemen. Contohnya bisa dilihat pada kode berikut.
+
+```go
+var chicken = map[string]int{
+    "januari":  50,
+    "februari": 40,
+    "maret":    34,
+    "april":    67,
+}
+
+for key, val := range chicken {
+    fmt.Println(key, "  \t:", val)
+}
+```
+
+![Perulangan Map](/assets/images/A_map_2_map_for_range.png)
+
+## A.17.4. Menghapus Item Map
+
+Fungsi `delete()` digunakan untuk menghapus item dengan key tertentu pada variabel map. Cara penggunaannya, dengan memasukan objek map dan key item yang ingin dihapus sebagai parameter.
+
+```go
+var chicken = map[string]int{"januari": 50, "februari": 40}
+
+fmt.Println(len(chicken)) // 2
+fmt.Println(chicken)
+
+delete(chicken, "januari")
+
+fmt.Println(len(chicken)) // 1
+fmt.Println(chicken)
+```
+
+Item yang memiliki key `"januari"` dalam variabel `chicken` akan dihapus.
+
+![Hapus item Map](/assets/images/A_map_3_map_delete_item.png)
+
+Fungsi `len()` jika digunakan pada map akan mengembalikan jumlah item.
+
+## A.17.5. Deteksi Keberadaan Item Dengan Key Tertentu
+
+Ada cara untuk mengetahui apakah dalam sebuah variabel map terdapat item dengan key tertentu atau tidak, yaitu dengan memanfaatkan 2 variabel sebagai penampung nilai kembalian pengaksesan item. Return value ke-2 ini adalah opsional, isinya nilai `bool` yang menunjukkan ada atau tidaknya item yang dicari.
+
+```go
+var chicken = map[string]int{"januari": 50, "februari": 40}
+var value, isExist = chicken["mei"]
+
+if isExist {
+    fmt.Println(value)
+} else {
+    fmt.Println("item is not exists")
+}
+```
+
+## A.17.6. Kombinasi Slice & Map
+
+Slice dan `map` bisa dikombinasikan, dan sering digunakan pada banyak kasus, contohnya seperti data array yang berisikan informasi siswa, dan banyak lainnya.
+
+Cara menggunakannya cukup mudah, contohnya seperti `[]map[string]int`, artinya slice yang tipe tiap elemen-nya adalah `map[string]int`.
+
+Agar lebih jelas, silakan praktekan contoh berikut.
+
+```go
+var chickens = []map[string]string{
+	map[string]string{"name": "chicken blue",   "gender": "male"},
+	map[string]string{"name": "chicken red",    "gender": "male"},
+	map[string]string{"name": "chicken yellow", "gender": "female"},
+}
+
+for _, chicken := range chickens {
+	fmt.Println(chicken["gender"], chicken["name"])
+}
+```
+
+Variabel `chickens` di atas berisikan informasi bertipe `map[string]string`, yang kebetulan tiap elemen memiliki 2 key yang sama.
+
+Jika anda menggunakan versi go terbaru, cara deklarasi slice-map bisa dipersingkat, tipe tiap elemen tidak wajib untuk dituliskan.
+
+```go
+var chickens = []map[string]string{
+	{"name": "chicken blue",   "gender": "male"},
+	{"name": "chicken red",    "gender": "male"},
+	{"name": "chicken yellow", "gender": "female"},
+}
+```
+
+Dalam `[]map[string]string`, tiap elemen bisa saja memiliki key yang berbeda-beda, sebagai contoh seperti kode berikut.
+
+```go
+var data = []map[string]string{
+	{"name": "chicken blue", "gender": "male", "color": "brown"},
+	{"address": "mangga street", "id": "k001"},
+	{"community": "chicken lovers"},
+}
+```
+
+sumber : https://github.com/novalagung/dasarpemrogramangolang/
